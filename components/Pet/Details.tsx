@@ -5,7 +5,7 @@ function Details({ details }: { details: string[] }) {
   return (
     <View style={tw`flex-row flex-wrap my-2`}>
       {details.map((detail) => (
-        <DetailBubble title={detail} />
+        <DetailBubble key={detail} title={detail} />
       ))}
     </View>
   );

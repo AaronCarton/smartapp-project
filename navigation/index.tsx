@@ -4,15 +4,11 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import {
-  ColorSchemeName,
-  useColorScheme,
-  StatusBar,
-  Switch,
-} from 'react-native';
+import { ColorSchemeName, useColorScheme, StatusBar, Switch } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { Pet as PetType } from '../types';
 import tw from 'twrnc';
 
 import Home from '../screens/Home';
@@ -27,7 +23,7 @@ import { HeartToggle, TabIcon } from '../components/Icon';
 export type RootStackParamList = {
   Root: undefined;
   AddModal: undefined;
-  PetModal: undefined;
+  PetModal: { pet: PetType };
 };
 
 export default () => {
