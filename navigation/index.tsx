@@ -4,17 +4,36 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import Add from '../screens/Add';
+import {
+  ColorSchemeName,
+  useColorScheme,
+  StatusBar,
+  Switch,
+} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
+import tw from 'twrnc';
+
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import Search from '../screens/Search';
 import Settings from '../screens/Settings';
-import { ColorSchemeName, useColorScheme, StatusBar } from 'react-native';
-import Icon from '../components/Icon';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Add from '../screens/Add';
+import Pet from '../screens/Pet';
+
+import { HeartToggle, TabIcon } from '../components/Icon';
+
+export type RootStackParamList = {
+  Root: undefined;
+  AddModal: undefined;
+  PetModal: undefined;
+};
 
 export default () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
     <NavigationContainer>
@@ -26,6 +45,16 @@ export default () => {
         />
         {/* <Stack.Group screenOptions={{ presentation: 'modal' }}> */}
         <Stack.Screen name="AddModal" component={Add} />
+        <Stack.Screen
+          name="PetModal"
+          component={Pet}
+          options={{
+            headerTransparent: true,
+            headerTintColor: '#f1f5f9',
+            title: '',
+            headerRight: () => <HeartToggle enabled={false} />,
+          }}
+        />
         {/* </Stack.Group> */}
       </Stack.Navigator>
     </NavigationContainer>
@@ -40,7 +69,7 @@ function BottomTab() {
       screenOptions={{ tabBarShowLabel: false, headerShown: false }}
       sceneContainerStyle={{
         paddingTop: StatusBar.currentHeight,
-        paddingHorizontal: 5,
+        // paddingHorizontal: 5,
       }}
       screenListeners={{
         tabLongPress: (e) => {
@@ -53,14 +82,14 @@ function BottomTab() {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="home" color={color} />,
         }}
       />
       <Tab.Screen
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="search" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="search" color={color} />,
         }}
       />
       <Tab.Screen
@@ -68,7 +97,7 @@ function BottomTab() {
         component={Add}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="add-circle-outline" color={color} size={45} />
+            <TabIcon name="add-circle-outline" color={color} size={45} />
           ),
         }}
         listeners={({ navigation }) => ({
@@ -82,14 +111,14 @@ function BottomTab() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="person" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,
         }}
       />
       <Tab.Screen
         name="Settings"
         component={Settings}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="settings" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="settings" color={color} />,
         }}
       />
     </Tab.Navigator>
