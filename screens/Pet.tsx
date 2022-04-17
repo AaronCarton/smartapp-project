@@ -5,7 +5,7 @@ import { RootStackParamList } from '../navigation';
 import tw from 'twrnc';
 
 import Title from '../components/Pet/Title';
-import Details from '../components/Pet/Details';
+import Tags from '../components/Pet/Tags';
 import AdoptButton from '../components/Pet/AdoptButton';
 import Seller from '../components/Pet/Seller';
 
@@ -28,7 +28,7 @@ function Pet({ route, navigation }: Props) {
         />
         <View style={tw`mx-4`}>
           <Title name={pet.name} gender={pet.gender} />
-          <Details details={[`${pet.age} ${pet.ageType}`, ...pet.details]} />
+          <Tags details={[`${pet.age} ${pet.ageType}`, ...pet.details]} />
           <AdoptButton />
           <Text style={tw`text-slate-500 mb-3`}>
             Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing
