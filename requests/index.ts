@@ -1,6 +1,6 @@
 import { Pet, User } from '../types';
 
-const BASE_URL = 'http://192.168.0.120:5003';
+const BASE_URL = `http://172.30.22.47:5003`;
 
 /**
  * Fetch pet from API, returns Pet if found

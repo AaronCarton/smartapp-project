@@ -5,10 +5,12 @@ import { RootStackParamList } from '../navigation/index';
 
 import { fetchAllPets, fetchUser } from '../requests';
 import { Pet as PetType } from '../types';
+import { TagInput } from '../components/Tags';
 
 export default () => {
   var navigation = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
   const [pets, setPets] = useState<PetType[]>([]);
+  const [tags, setTags] = useState<string[]>(['Rottweiler', 'Dumb']);
   useEffect(() => {
     fetchAllPets().then((pets) => {
       console.log(pets);
@@ -27,6 +29,7 @@ export default () => {
           onPress={() => navigation.navigate('PetModal', { pet })}
         />
       ))}
+      <TagInput value={tags} onChange={(t) => setTags(tags)} />
     </>
   );
 };

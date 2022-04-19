@@ -5,7 +5,7 @@ import { RootStackParamList } from '../navigation';
 import tw from 'twrnc';
 
 import Title from '../components/Pet/Title';
-import Tags from '../components/Pet/Tags';
+import { Tags } from '../components/Tags';
 import AdoptButton from '../components/Pet/AdoptButton';
 import Seller from '../components/Pet/Seller';
 
