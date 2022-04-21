@@ -49,10 +49,10 @@ function TagInput({
   };
 
   return (
-    <View style={tw`m-2`}>
+    <View>
       <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
         <View
-          style={tw`flex border-2 border-slate-700 rounded-md flex-wrap flex-row w-64 py-2 px-2`}
+          style={tw`flex border-2 border-slate-700 rounded-md flex-wrap flex-row w-full py-2 px-2`}
         >
           <View style={tw`flex flex-wrap flex-row `}>
             {tags.map((text) => (
