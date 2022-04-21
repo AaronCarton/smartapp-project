@@ -33,12 +33,12 @@ const TextInput = ({
   ...props
 }: CustomInputProps): JSX.Element => {
   const { colorScheme } = useDarkMode();
-  const defaultColor = colorScheme === 'light' ? '#0f172a' : '#fafafa';
+  const defaultColor = colorScheme === 'light' ? 'text-slate-900' : 'text-neutral-50';
   return (
     <RNinput
       ref={ref}
-      style={tw`${className ?? ''}`}
-      placeholderTextColor={defaultColor}
+      style={tw`${defaultColor} ${className ?? ''}`}
+      placeholderTextColor={colorScheme === 'light' ? '#9ca3af' : '#4b5563'}
       {...props}
     >
       {children}

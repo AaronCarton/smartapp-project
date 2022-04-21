@@ -60,8 +60,8 @@ function TagInput({
             ))}
           </View>
           <TextInput
-            placeholderTextColor={colorScheme === 'light' ? '#0f172a' : '#fafafa'}
-            style={tw`pl-2 text-slate-900`}
+            placeholderTextColor={colorScheme === 'light' ? '#9ca3af' : '#4b5563'}
+            style={tw`pl-2 text-slate-900 dark:text-neutral-50`}
             placeholder="Enter to add tags"
             ref={inputRef}
             value={inputValue}
