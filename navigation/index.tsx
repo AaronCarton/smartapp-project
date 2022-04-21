@@ -1,32 +1,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native';
-import {
-  ColorSchemeName,
-  useColorScheme,
-  StatusBar,
-  Switch,
-  Image,
-} from 'react-native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
 import { Pet as PetType, User } from '../types';
-import tw, { useAppColorScheme } from 'twrnc';
 
 import Home from '../screens/Home';
-import Profile from '../screens/Settings';
 import Search from '../screens/Search';
 import Settings from '../screens/Settings';
 import Add from '../screens/Add';
 import Pet from '../screens/Pet';
 import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
+import Messages from '../screens/Messages';
 
 import { HeartToggle, TabIcon } from '../components/Icon';
+import { CustomDarkTheme, useDarkMode } from '../hooks/darkmode';
 
 export type RootStackParamList = {
   Root: undefined;
@@ -46,9 +33,12 @@ export type BottomTabParamList = {
 
 export default () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
+  const { colorScheme, toggleColorScheme, setColorScheme } = useDarkMode();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={colorScheme == 'dark' ? CustomDarkTheme : DefaultTheme}
+    >
       <Stack.Navigator>
         <Stack.Screen
           name="Root"
@@ -119,7 +109,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="Messages"
-        component={Profile}
+        component={Messages}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="message" color={color} />,
         }}
