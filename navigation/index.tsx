@@ -4,32 +4,48 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import { ColorSchemeName, useColorScheme, StatusBar, Switch } from 'react-native';
+import {
+  ColorSchemeName,
+  useColorScheme,
+  StatusBar,
+  Switch,
+  Image,
+} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Pet as PetType } from '../types';
-import tw from 'twrnc';
+import { Pet as PetType, User } from '../types';
+import tw, { useAppColorScheme } from 'twrnc';
 
 import Home from '../screens/Home';
-import Profile from '../screens/Profile';
+import Profile from '../screens/Settings';
 import Search from '../screens/Search';
 import Settings from '../screens/Settings';
 import Add from '../screens/Add';
 import Pet from '../screens/Pet';
+import Login from '../screens/auth/Login';
+import Register from '../screens/auth/Register';
 
 import { HeartToggle, TabIcon } from '../components/Icon';
 
 export type RootStackParamList = {
   Root: undefined;
+  LoginModal: undefined;
+  RegisterModal: undefined;
   AddModal: undefined;
   PetModal: { pet: PetType };
 };
 
+export type BottomTabParamList = {
+  Home: undefined;
+  Search: undefined;
+  Add: undefined;
+  Messages: undefined;
+  Profile: { currentUser: User };
+};
+
 export default () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
     <NavigationContainer>
@@ -41,6 +57,8 @@ export default () => {
         />
         {/* <Stack.Group screenOptions={{ presentation: 'modal' }}> */}
         <Stack.Screen name="AddModal" component={Add} />
+        <Stack.Screen name="LoginModal" component={Login} />
+        <Stack.Screen name="RegisterModal" component={Register} />
         <Stack.Screen
           name="PetModal"
           component={Pet}
@@ -58,21 +76,17 @@ export default () => {
 };
 
 function BottomTab() {
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator<BottomTabParamList>();
 
   return (
     <Tab.Navigator
-      screenOptions={{ tabBarShowLabel: false, headerShown: false }}
-      sceneContainerStyle={{
-        paddingTop: StatusBar.currentHeight,
-        // paddingHorizontal: 5,
-      }}
-      screenListeners={{
-        tabLongPress: (e) => {
-          // TODO: Show label of tab
-          // https://mui.com/material-ui/react-tooltip/
-        },
-      }}
+      screenOptions={{ tabBarShowLabel: false }}
+      sceneContainerStyle={
+        {
+          // paddingTop: StatusBar.currentHeight,
+          // paddingHorizontal: 5,
+        }
+      }
     >
       <Tab.Screen
         name="Home"
@@ -104,17 +118,18 @@ function BottomTab() {
         })}
       />
       <Tab.Screen
-        name="Profile"
+        name="Messages"
         component={Profile}
         options={{
-          tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="message" color={color} />,
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Profile"
         component={Settings}
+        initialParams={{ currentUser: undefined }}
         options={{
-          tabBarIcon: ({ color }) => <TabIcon name="settings" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,
         }}
       />
     </Tab.Navigator>
