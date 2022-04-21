@@ -36,9 +36,7 @@ export default () => {
   const { colorScheme, toggleColorScheme, setColorScheme } = useDarkMode();
 
   return (
-    <NavigationContainer
-      theme={colorScheme == 'dark' ? CustomDarkTheme : DefaultTheme}
-    >
+    <NavigationContainer theme={colorScheme == 'dark' ? CustomDarkTheme : DefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen
           name="Root"
