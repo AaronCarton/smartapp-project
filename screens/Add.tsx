@@ -1,50 +1,51 @@
 import { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button } from 'react-native';
 import { TagInput } from '../components/Tags';
+import { Text, View, TextInput } from '../components/Custom';
 import tw from 'twrnc';
 
 export default () => {
   const [tags, setTags] = useState<string[]>([]);
   return (
-    <View style={tw`h-full mx-14 justify-center`}>
+    <View className="mx-14 h-full justify-center">
       <Text>Image</Text>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Name</Text>
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Name</Text>
         <TextInput
-          style={tw`border-slate-700 border-2 rounded-md py-1 px-3`}
+          className="rounded-md border-2 border-slate-700 py-1 px-3"
           placeholder="Name"
         />
       </View>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Age</Text>
-        <View style={tw`flex-row`}>
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Age</Text>
+        <View className="flex-row">
           <TextInput
-            style={tw`border-slate-700 border-2 rounded-md py-1 px-3`}
+            className="rounded-md border-2 border-slate-700 py-1 px-3"
             placeholder="4"
             keyboardType="numeric"
           />
           <TextInput
-            style={tw`border-slate-700 border-2 rounded-md py-1 px-3`}
+            className="rounded-md border-2 border-slate-700 py-1 px-3"
             placeholder="4"
             keyboardType="numeric"
           />
         </View>
       </View>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Details</Text>
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Details</Text>
         <TagInput value={['bruh', 'moment']} onChange={(t) => setTags(t)} />
       </View>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Description</Text>
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Description</Text>
         <TextInput
-          style={tw`border-slate-700 border-2 rounded-md py-1 px-3 overflow-none`}
+          className="rounded-md border-2 border-slate-700 py-1 px-3"
           placeholder="Description"
           numberOfLines={4}
           multiline={true}
           textAlignVertical="top"
         />
       </View>
-      <View style={tw`mt-3 mb-3`}>
+      <View className="mt-3 mb-3">
         <Button title="Preview" color={'#ef4444'} onPress={() => {}} />
       </View>
       <View>

@@ -1,9 +1,9 @@
-import { View, Button } from 'react-native';
-import tw from 'twrnc';
+import { Button } from 'react-native';
+import { View } from '../Custom';
 
 function AdopButton() {
   return (
-    <View style={tw`mb-4`}>
+    <View className="mb-4">
       <Button title="Adopt me" color={'#ef4444'} onPress={() => {}} />
     </View>
   );

@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, Button } from 'react-native';
+import { Button } from 'react-native';
 import { useEffect, useState } from 'react';
+import { Text, View } from '../components/Custom';
 import { RootStackParamList } from '../navigation/index';
 
 import { fetchAllPets, fetchUser } from '../requests';
@@ -20,7 +21,7 @@ export default () => {
   }, []);
 
   return (
-    <>
+    <View>
       <Text>Home</Text>
       {pets.map((pet) => (
         <Button
@@ -30,6 +31,6 @@ export default () => {
         />
       ))}
       <TagInput value={tags} onChange={(t) => setTags(tags)} />
-    </>
+    </View>
   );
 };

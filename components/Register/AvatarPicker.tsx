@@ -1,9 +1,9 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button, Image, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, TouchableWithoutFeedback } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import tw from 'twrnc';
-import { ImageData, User } from '../../types';
+import { View } from '../Custom';
 
 /**
  * An avatar picker component, opens images so user can select an avatar.
@@ -48,11 +48,9 @@ function AvatarPicker({
 
   return (
     <TouchableWithoutFeedback onPress={() => pickImage()}>
-      <View style={tw`mx-auto relative`}>
+      <View className="relative mx-auto">
         <Image source={{ uri: image }} style={tw`w-40 h-40 rounded-full`} />
-        <View
-          style={tw`bg-[#f2f2f2] mx-auto rounded-full p-1.5 absolute bottom-2 right-2`}
-        >
+        <View className="absolute bottom-2 right-2 mx-auto rounded-full bg-[#f2f2f2] p-1.5">
           <MaterialIcons name="edit" size={32} color={'#ef4444'} />
         </View>
       </View>

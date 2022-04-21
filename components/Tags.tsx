@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { TextInput, TextInput as TI, TouchableWithoutFeedback } from 'react-native';
+import { Text, View } from './Custom';
+import useDarkMode from '../hooks/darkmode';
 import tw from 'twrnc';
 
 /**
@@ -21,6 +23,7 @@ function TagInput({
   const [inputValue, setInputValue] = useState<string | undefined>('');
   const [errorMessage, setErrorMessage] = useState<string>();
   const inputRef = useRef<TextInput>(null);
+  const { colorScheme } = useDarkMode();
 
   useEffect(() => {
     onChange(tags);
@@ -28,8 +31,7 @@ function TagInput({
 
   const onKeyPress = (e: { nativeEvent: { key: string } }) => {
     // if backspace is pressed on an empty input, set inputValue to undefined (instead of empty string)
-    if (e.nativeEvent.key === 'Backspace' && inputValue === '')
-      setInputValue(undefined);
+    if (e.nativeEvent.key === 'Backspace' && inputValue === '') setInputValue(undefined);
     // if backspace is pressed and inputvalue is undefined == double backspace -> remove last tag
     if (e.nativeEvent.key === 'Backspace' && inputValue === undefined) {
       setInputValue(tags.pop() ?? ''); // remove last tag, change input to last tag, or empty string
@@ -51,15 +53,14 @@ function TagInput({
   return (
     <View>
       <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-        <View
-          style={tw`flex border-2 border-slate-700 rounded-md flex-wrap flex-row w-full py-2 px-2`}
-        >
-          <View style={tw`flex flex-wrap flex-row `}>
+        <View className="flex w-full flex-row flex-wrap rounded-md border-2 border-slate-700 py-2 px-2">
+          <View className="flex flex-row flex-wrap ">
             {tags.map((text) => (
               <Tag key={text} value={text} />
             ))}
           </View>
           <TextInput
+            placeholderTextColor={colorScheme === 'light' ? '#0f172a' : '#fafafa'}
             style={tw`pl-2 text-slate-900`}
             placeholder="Enter to add tags"
             ref={inputRef}
@@ -71,14 +72,14 @@ function TagInput({
           />
         </View>
       </TouchableWithoutFeedback>
-      <Text style={tw`text-red-600 ml-2 mt-1`}>{errorMessage}</Text>
+      <Text className="ml-2 mt-1 text-red-600">{errorMessage}</Text>
     </View>
   );
 }
 
 function Tag({ value }: { value: string }) {
   return (
-    <Text style={tw`bg-slate-300 text-slate-900 rounded-md px-2 py-0.5 mx-0.5 mb-1`}>
+    <Text className="mx-0.5 mb-1 rounded-md bg-slate-300 px-2 py-0.5 text-slate-900">
       {value}
     </Text>
   );
@@ -86,9 +87,7 @@ function Tag({ value }: { value: string }) {
 
 function DetailTag({ title }: { title: string }) {
   return (
-    <Text
-      style={tw`rounded-md bg-slate-300 text-slate-800 text-center self-start px-2 py-1 mr-2 mb-2`}
-    >
+    <Text className="mr-2 mb-2 self-start rounded-md bg-slate-300 px-2 py-1 text-center text-slate-800">
       {title}
     </Text>
   );
@@ -96,7 +95,7 @@ function DetailTag({ title }: { title: string }) {
 
 function Tags({ details }: { details: string[] }) {
   return (
-    <View style={tw`flex-row flex-wrap my-2`}>
+    <View className="my-2 flex-row flex-wrap">
       {details.map((detail) => (
         <DetailTag key={detail} title={detail} />
       ))}

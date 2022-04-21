@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Text, View, Image, ScrollView, Route } from 'react-native';
+import { Image, ScrollView, Route } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation';
 import tw from 'twrnc';
@@ -8,6 +8,7 @@ import Title from '../components/Pet/Title';
 import { Tags } from '../components/Tags';
 import AdoptButton from '../components/Pet/AdoptButton';
 import Seller from '../components/Pet/Seller';
+import { Text, View } from '../components/Custom';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'PetModal'>;
@@ -26,19 +27,19 @@ function Pet({ route, navigation }: Props) {
             uri: pet.image,
           }}
         />
-        <View style={tw`mx-4`}>
+        <View className="mx-4">
           <Title name={pet.name} gender={pet.gender} />
           <Tags details={[`${pet.age} ${pet.ageType}`, ...pet.details]} />
           <AdoptButton />
-          <Text style={tw`text-slate-500 mb-3`}>
+          <Text className="mb-3 text-slate-500">
             Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing
             elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
             penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
             quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla
             consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec
           </Text>
-          <Text style={tw`text-xl font-bold`}>Location</Text>
-          <Text style={tw`text-base text-slate-500`}>
+          <Text className="text-xl font-bold">Location</Text>
+          <Text className="text-base text-slate-500">
             <Ionicons name="location" color={'#64748B'} size={15} />
             {pet.location}
           </Text>

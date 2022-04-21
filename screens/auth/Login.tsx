@@ -1,41 +1,34 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import {
-  Button,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Button, TouchableWithoutFeedback } from 'react-native';
 import { RootStackParamList } from '../../navigation';
+import { Text, View, TextInput } from '../../components/Custom';
 import tw from 'twrnc';
 
 export default () => {
   var navigation = useNavigation<NavigationProp<RootStackParamList, 'LoginModal'>>();
 
   return (
-    <View style={tw`h-full mx-14 justify-center`}>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Email</Text>
+    <View className="mx-14 h-full justify-center">
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Email</Text>
         <TextInput
-          style={tw`border-slate-700 rounded-md border-2 px-3 py-1`}
+          className="rounded-md border-2 border-slate-700 px-3 py-1"
           placeholder="user@email.com"
         />
       </View>
-      <View style={tw`mb-2`}>
-        <Text style={tw`font-bold text-slate-600 mb-0.5`}>Password</Text>
+      <View className="mb-2">
+        <Text className="mb-0.5 font-bold text-slate-600">Password</Text>
         <TextInput
-          style={tw`border-slate-700 border-2 rounded-md py-1 px-3`}
+          className="rounded-md border-2 border-slate-700 py-1 px-3"
           placeholder="test123"
         />
       </View>
-      <View style={tw`mt-3 mb-2`}>
+      <View className="mt-3 mb-2">
         <Button title="Login" color={'#ef4444'} onPress={() => {}} />
       </View>
       <TouchableWithoutFeedback onPress={() => navigation.navigate('RegisterModal')}>
-        <View style={tw`w-full p-2`}>
-          <Text style={tw`font-bold text-slate-600 text-center`}>
-            Create account
-          </Text>
+        <View className="w-full p-2">
+          <Text className="text-center font-bold text-slate-600">Create account</Text>
         </View>
       </TouchableWithoutFeedback>
     </View>

@@ -1,6 +1,7 @@
-import { Text, View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import tw from 'twrnc';
+import { Text, View } from '../Custom';
 
 function Seller({
   name,
@@ -12,11 +13,11 @@ function Seller({
   location: string;
 }) {
   return (
-    <View style={tw`flex-row my-6`}>
+    <View className="my-6 flex-row">
       <Image style={tw`h-16 w-16 rounded-md`} source={{ uri: avatar }} />
-      <View style={tw`my-4 mx-2`}>
-        <Text style={tw`font-bold text-base leading-none`}>{name}</Text>
-        <Text style={tw`text-slate-500 text-sm leading-5`}>
+      <View className="my-4 mx-2">
+        <Text className="text-base font-bold leading-none">{name}</Text>
+        <Text className="text-sm leading-5 text-slate-500">
           <Ionicons name="location" color={'#64748B'} />
           {location}
         </Text>
