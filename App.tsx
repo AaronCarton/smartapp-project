@@ -9,15 +9,19 @@ import { DefaultTheme } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { loadAsync } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useAppColorScheme } from 'twrnc';
 import { tw } from './components/Custom';
+import { AuthContext } from './hooks/Auth';
 import { CustomDarkTheme, DarkModeContext } from './hooks/darkmode';
 import Navigation from './navigation';
+import { User } from './types';
 
 export default function App() {
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+  const [user, setUser] = useState<User>();
   const bgColor =
     colorScheme === 'dark'
       ? CustomDarkTheme.colors.background
@@ -40,7 +44,9 @@ export default function App() {
         value={{ colorScheme, toggleColorScheme, setColorScheme }}
       >
         <View style={{ flex: 1, backgroundColor: bgColor }}>
-          <Navigation />
+          <AuthContext.Provider value={{ user, setUser }}>
+            <Navigation />
+          </AuthContext.Provider>
         </View>
       </DarkModeContext.Provider>
       {/* If colorScheme is in light mode, make the statusbar black, otherwise make it white */}

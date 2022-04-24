@@ -131,10 +131,9 @@ export const loginUser = async (loginBody: {
     if (response.status !== 200)
       return { ...error, generic: { message: 'An error occured', title: 'Error' } };
     // if successful, return user
-    const json = await response.json();
-    console.log('pog');
-
-    return json as User;
+    var user: User = await response.json();
+    user.image = `${BASE_URL}/images/users/${user.id}.webp`;
+    return user;
   } catch (e) {
     console.error(e);
     return { ...error, generic: { message: 'An error occured', title: 'Error' } };

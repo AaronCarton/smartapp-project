@@ -1,11 +1,13 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Button } from 'react-native';
 import { RootStackParamList } from '../navigation';
-import { Text, View } from '../components/Custom';
+import { Text, View, Button, tw } from '../components/Custom';
 import { User } from '../types';
+import { useAuth } from '../hooks/Auth';
+import { Image } from 'react-native';
 
-export default ({ user }: { user?: User }) => {
+export default () => {
   var navigation = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
+  let { user, setUser } = useAuth();
 
   // if no User is passed, redirect to the Login screen
   if (!user)
@@ -21,14 +23,16 @@ export default ({ user }: { user?: User }) => {
       <View>
         <Text>Profile</Text>
         <Text>Avatar</Text>
-        <Text>Username</Text>
+        <Text>{user.image}</Text>
+        <Image source={{ uri: user.image }} style={tw`h-14 w-14`} />
+        <Text>Username: {user.username}</Text>
         <Text>Edit button</Text>
       </View>
       <Text>Listed pets</Text>
       <Text>Favorited</Text>
       <Text>Dark Mode</Text>
       <Text>Settings</Text>
-      <Text>Logout</Text>
+      <Button title="Logout" onPress={() => setUser(undefined)} />
     </View>
   );
 };

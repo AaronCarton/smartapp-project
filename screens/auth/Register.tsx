@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Button } from 'react-native';
-import { Text, View, TextInput } from '../../components/Custom';
-import tw from 'twrnc';
+import { TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TextInput, Button } from '../../components/Custom';
 
 import AvatarPicker from '../../components/Register/AvatarPicker';
 import { User } from '../../types';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation';
 
 export default () => {
+  var navigation = useNavigation<NavigationProp<RootStackParamList, 'RegisterModal'>>();
   const [newUser, setNewUser] = useState<User>({} as User);
 
   return (
@@ -15,7 +17,7 @@ export default () => {
         <AvatarPicker onChange={(image) => setNewUser({ ...newUser, image })} />
       </View>
       <View className="mb-2">
-        <Text className="mb-0.5 font-bold text-slate-600">Username</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Username</Text>
         <TextInput
           value={newUser.username}
           onChangeText={(username) => setNewUser({ ...newUser, username })}
@@ -24,7 +26,7 @@ export default () => {
         />
       </View>
       <View className="mb-2">
-        <Text className="mb-0.5 font-bold text-slate-600">Email</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Email</Text>
         <TextInput
           value={newUser.email}
           onChangeText={(email) => setNewUser({ ...newUser, email })}
@@ -33,7 +35,7 @@ export default () => {
         />
       </View>
       <View className="mb-2">
-        <Text className="mb-0.5 font-bold text-slate-600">Password</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Password</Text>
         <TextInput
           secureTextEntry={true}
           value={newUser.password}
@@ -43,12 +45,15 @@ export default () => {
         />
       </View>
       <View className="mt-3 mb-2">
-        <Button
-          title="Create account"
-          color={'#ef4444'}
-          onPress={() => console.log(newUser)}
-        />
+        <Button title="Create account" onPress={() => console.log(newUser)} />
       </View>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('LoginModal')}>
+        <View className="w-full p-2">
+          <Text className="text-center font-comfortaa_bold text-slate-600">
+            Already have an account? Login
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
