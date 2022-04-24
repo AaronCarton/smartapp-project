@@ -34,9 +34,9 @@ function Pet({ route, navigation }: Props) {
           <Text className="mb-3 text-slate-500">
             Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing
             elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
-            quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla
-            consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam
+            felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
+            massa quis enim. Donec pede justo, fringilla vel, aliquet nec
           </Text>
           <Text className="text-xl font-bold">Location</Text>
           <Text className="text-base text-slate-500">
@@ -47,6 +47,9 @@ function Pet({ route, navigation }: Props) {
             name={seller.username}
             location={seller.location}
             avatar={seller.image}
+            onPress={() => {
+              navigation.navigate('ProfileModal', { user: seller });
+            }}
           />
         </View>
       </ScrollView>

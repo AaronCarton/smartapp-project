@@ -14,12 +14,14 @@ import Messages from '../screens/Messages';
 
 import { HeartToggle, TabIcon } from '../components/Icon';
 import { CustomDarkTheme, useDarkMode } from '../hooks/darkmode';
+import Profile from '../screens/Profile';
 
 export type RootStackParamList = {
   Root: undefined;
   LoginModal: undefined;
   RegisterModal: undefined;
   AddModal: undefined;
+  ProfileModal: { user: User };
   PetModal: { pet: PetType };
 };
 
@@ -28,7 +30,7 @@ export type BottomTabParamList = {
   Search: undefined;
   Add: undefined;
   Messages: undefined;
-  Profile: { currentUser: User };
+  Profile: undefined;
 };
 
 export default () => {
@@ -47,6 +49,7 @@ export default () => {
         <Stack.Screen name="AddModal" component={Add} />
         <Stack.Screen name="LoginModal" component={Login} />
         <Stack.Screen name="RegisterModal" component={Register} />
+        <Stack.Screen name="ProfileModal" component={Profile} />
         <Stack.Screen
           name="PetModal"
           component={Pet}
@@ -115,7 +118,6 @@ function BottomTab() {
       <Tab.Screen
         name="Profile"
         component={Settings}
-        initialParams={{ currentUser: undefined }}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,
         }}
