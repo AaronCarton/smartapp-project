@@ -1,6 +1,9 @@
-import { Pet, User } from '../types';
+import * as ImagePicker from 'expo-image-picker';
+import { FormError, Pet, User } from '../types';
 
-const BASE_URL = `http://172.30.22.47:5003`;
+const BASE_URL = `http://192.168.0.120:5003`;
+//? 192.168.0.120
+//? 172.30.22.47
 
 /**
  * Fetch pet from API, returns Pet if found
@@ -31,6 +34,36 @@ export const fetchUser = async (userID: string): Promise<User> => {
   }
 };
 
+// export const postUser = async (user: User): Promise<User> => {
+//   try {
+//     let formdata = new FormData();
+//     let imageData = user.image;
+//     formdata.append('username', user.username);
+//     formdata.append('password', user.password!);
+//     formdata.append('email', user.email);
+//     formdata.append('location', user.location);
+//     formdata.append('image', {
+//       // @ts-ignore
+//       uri: imageData.uri,
+//       name: imageData.filename,
+//       type: imageData.type!,
+//     });
+//     const response = await fetch(`${BASE_URL}`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: new FormData(),
+//     });
+
+//     var user: User = await response.json();
+//     user.image = `${BASE_URL}/images/users/${user.id}.webp`;
+//     return user;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
 /**
  * Fetch all pets from API, returns array of Pets
  */
@@ -47,5 +80,63 @@ export const fetchAllPets = async (): Promise<Pet[]> => {
   } catch (error) {
     console.error(error);
     return [] as Pet[];
+  }
+};
+
+export const loginUser = async (loginBody: {
+  email: string;
+  password: string;
+}): Promise<User | FormError> => {
+  const error: FormError = {
+    generic: { message: '', title: '' },
+    fields: {
+      email: {
+        hasError: false,
+        inlineErrorMessage: '',
+      },
+      password: {
+        hasError: false,
+        inlineErrorMessage: '',
+      },
+    },
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/authenticate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginBody),
+    });
+    // if user not found, return error
+    if (response.status === 404)
+      return {
+        ...error,
+        fields: {
+          ...error.fields,
+          email: { hasError: true, inlineErrorMessage: 'Email not found' },
+        },
+      };
+    // if password incorrect, return error
+    if (response.status === 401)
+      return {
+        ...error,
+        fields: {
+          ...error.fields,
+          password: { hasError: true, inlineErrorMessage: 'Incorrect password' },
+        },
+      };
+    // if any other error, return error
+    if (response.status !== 200)
+      return { ...error, generic: { message: 'An error occured', title: 'Error' } };
+    // if successful, return user
+    const json = await response.json();
+    console.log('pog');
+
+    return json as User;
+  } catch (e) {
+    console.error(e);
+    return { ...error, generic: { message: 'An error occured', title: 'Error' } };
   }
 };
