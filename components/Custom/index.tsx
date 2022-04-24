@@ -1,5 +1,10 @@
 import useDarkMode from '../../hooks/darkmode';
-import { Text as RNtext, View as RNview, TextInput as RNinput } from 'react-native';
+import {
+  Text as RNtext,
+  View as RNview,
+  TextInput as RNinput,
+  Pressable,
+} from 'react-native';
 import { TextProps, ViewProps, TextInputProps } from 'react-native';
 import { create } from 'twrnc';
 const tw = create(require(`./../../tailwind.config`));
@@ -65,5 +70,36 @@ const View = ({ className, children, ref, ...props }: CustomViewProps): JSX.Elem
   );
 };
 
-export { Text, TextInput, View };
+interface CustomButtonProps {
+  title: string;
+  className?: string;
+  textStyle?: string;
+  onPress: () => void;
+}
+
+function Button({
+  title,
+  className,
+  textStyle,
+  onPress,
+}: CustomButtonProps): JSX.Element {
+  return (
+    <Pressable
+      style={tw`px-10 py-2 bg-red-500 rounded-md items-center justify-center ${
+        className ?? ''
+      }`}
+      onPress={onPress}
+    >
+      <Text
+        className={`font-comfortaa_bold text-base leading-6 tracking-wide text-white ${
+          textStyle ?? ''
+        }`}
+      >
+        {title}
+      </Text>
+    </Pressable>
+  );
+}
+
+export { Text, TextInput, View, Button, tw };
 export { CustomTextProps, CustomInputProps, CustomViewProps };
