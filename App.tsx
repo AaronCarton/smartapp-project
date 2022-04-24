@@ -11,7 +11,8 @@ import { loadAsync } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import tw, { useAppColorScheme } from 'twrnc';
+import { useAppColorScheme } from 'twrnc';
+import { tw } from './components/Custom';
 import { CustomDarkTheme, DarkModeContext } from './hooks/darkmode';
 import Navigation from './navigation';
 

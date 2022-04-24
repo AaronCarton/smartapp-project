@@ -1,7 +1,6 @@
 import { DarkTheme } from '@react-navigation/native';
 import { createContext, useContext } from 'react';
-import { Text } from 'react-native';
-import tw, { RnColorScheme, useAppColorScheme } from 'twrnc';
+import { RnColorScheme } from 'twrnc';
 
 // React Navigation custom dark theme
 const CustomDarkTheme = {
@@ -18,9 +17,7 @@ interface DarkModeContextType {
   setColorScheme: (colorScheme: RnColorScheme) => void;
 }
 
-const DarkModeContext = createContext<DarkModeContextType>(
-  {} as DarkModeContextType,
-);
+const DarkModeContext = createContext<DarkModeContextType>({} as DarkModeContextType);
 
 const useDarkMode = () => useContext(DarkModeContext);
 
