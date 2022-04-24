@@ -1,4 +1,13 @@
+import {
+  useFonts,
+  Comfortaa_400Regular,
+  Comfortaa_500Medium,
+  Comfortaa_600SemiBold,
+  Comfortaa_700Bold,
+} from '@expo-google-fonts/comfortaa';
 import { DefaultTheme } from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
+import { loadAsync } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -12,6 +21,17 @@ export default function App() {
     colorScheme === 'dark'
       ? CustomDarkTheme.colors.background
       : DefaultTheme.colors.background;
+
+  let [fontsLoaded] = useFonts({
+    Comfortaa: require('./assets/fonts/Comfortaa-Regular.ttf'),
+    'Comfortaa-Bold': require('./assets/fonts/Comfortaa-Bold.ttf'),
+    'Comfortaa-SemiBold': require('./assets/fonts/Comfortaa-SemiBold.ttf'),
+    'Comfortaa-Medium': require('./assets/fonts/Comfortaa-Medium.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <SafeAreaProvider>

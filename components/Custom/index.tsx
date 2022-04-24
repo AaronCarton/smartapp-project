@@ -1,8 +1,8 @@
 import useDarkMode from '../../hooks/darkmode';
 import { Text as RNtext, View as RNview, TextInput as RNinput } from 'react-native';
 import { TextProps, ViewProps, TextInputProps } from 'react-native';
-import tw from 'twrnc';
-import { forwardRef } from 'react';
+import { create } from 'twrnc';
+const tw = create(require(`./../../tailwind.config`));
 
 type CustomTextProps = {
   className?: string;
@@ -14,7 +14,11 @@ const Text = ({ className, children, ref, ...props }: CustomTextProps): JSX.Elem
   const { colorScheme } = useDarkMode();
   const defaultColor = colorScheme === 'light' ? 'text-slate-900' : 'text-neutral-50';
   return (
-    <RNtext style={tw`${defaultColor} ${className ?? ''}`} ref={ref} {...props}>
+    <RNtext
+      style={tw`font-comfortaa ${defaultColor} ${className ?? ''}`}
+      ref={ref}
+      {...props}
+    >
       {children}
     </RNtext>
   );
