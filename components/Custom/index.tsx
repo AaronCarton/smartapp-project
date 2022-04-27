@@ -4,6 +4,7 @@ import {
   View as RNview,
   TextInput as RNinput,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import { TextProps, ViewProps, TextInputProps } from 'react-native';
 import { create } from 'twrnc';
@@ -84,20 +85,21 @@ function Button({
   onPress,
 }: CustomButtonProps): JSX.Element {
   return (
-    <Pressable
-      style={tw`px-10 py-2 bg-red-500 rounded-md items-center justify-center ${
-        className ?? ''
-      }`}
-      onPress={onPress}
-    >
-      <Text
-        className={`font-comfortaa_bold text-base leading-6 tracking-wide text-white ${
-          textStyle ?? ''
+    <TouchableOpacity onPress={onPress} style={{ elevation: 2 }}>
+      <View
+        style={tw`px-10 py-2 bg-red-500 rounded-md items-center justify-center ${
+          className ?? ''
         }`}
       >
-        {title}
-      </Text>
-    </Pressable>
+        <Text
+          className={`font-comfortaa_bold text-base leading-6 tracking-wide text-white ${
+            textStyle ?? ''
+          }`}
+        >
+          {title}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 

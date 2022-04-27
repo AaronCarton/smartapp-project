@@ -1,9 +1,12 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation';
 import { Text, View, Button, tw } from '../components/Custom';
+import { Image } from 'react-native';
 import { User } from '../types';
 import { useAuth } from '../hooks/Auth';
-import { Image } from 'react-native';
+
+import SettingsItem from '../components/Settings/SettingsItem';
+import ProfilePreview from '../components/Settings/ProfilePreview';
 
 export default () => {
   var navigation = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
@@ -19,20 +22,12 @@ export default () => {
     );
   return (
     <View>
-      <Text>"Title: User name"</Text>
-      <View>
-        <Text>Profile</Text>
-        <Text>Avatar</Text>
-        <Text>{user.image}</Text>
-        <Image source={{ uri: user.image }} style={tw`h-14 w-14`} />
-        <Text>Username: {user.username}</Text>
-        <Text>Edit button</Text>
-      </View>
-      <Text>Listed pets</Text>
-      <Text>Favorited</Text>
-      <Text>Dark Mode</Text>
-      <Text>Settings</Text>
-      <Button title="Logout" onPress={() => setUser(undefined)} />
+      <ProfilePreview user={user} />
+      <SettingsItem title={'Listed pets'} iconName={'list'} />
+      <SettingsItem title={'Favorited'} iconName={'heart'} />
+      <SettingsItem title={'Dark Mode'} iconName={'moon'} />
+      <SettingsItem title={'Settings'} iconName={'settings'} />
+      <Button title="Logout" onPress={() => setUser(undefined)} className="m-3" />
     </View>
   );
 };
