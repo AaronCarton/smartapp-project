@@ -1,13 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Pet as PetType, User } from '../types';
+import { Pet, User } from '../types';
 
 import Home from '../screens/Home';
 import Search from '../screens/Search';
 import Settings from '../screens/Settings';
 import Add from '../screens/Add';
-import Pet from '../screens/Pet';
+import PetScreen from '../screens/Pet';
 import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
 import Messages from '../screens/Messages';
@@ -15,6 +15,7 @@ import Messages from '../screens/Messages';
 import { HeartToggle, TabIcon } from '../components/Icon';
 import { CustomDarkTheme, useDarkMode } from '../hooks/darkmode';
 import Profile from '../screens/Profile';
+import Results from '../screens/Results';
 
 export type RootStackParamList = {
   Root: undefined;
@@ -22,15 +23,15 @@ export type RootStackParamList = {
   RegisterModal: undefined;
   AddModal: undefined;
   ProfileModal: { user: User };
-  PetModal: { pet: PetType };
+  PetModal: { pet: Pet };
 };
 
 export type BottomTabParamList = {
   Home: undefined;
-  Search: undefined;
+  Search: { petList: Pet[] | undefined };
   Add: undefined;
   Messages: undefined;
-  Profile: undefined;
+  Settings: undefined;
 };
 
 export default () => {
@@ -52,7 +53,7 @@ export default () => {
         <Stack.Screen name="ProfileModal" component={Profile} />
         <Stack.Screen
           name="PetModal"
-          component={Pet}
+          component={PetScreen}
           options={{
             headerTransparent: true,
             headerTintColor: '#f1f5f9',
@@ -88,7 +89,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={Results}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="search" color={color} />,
         }}
@@ -116,7 +117,7 @@ function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Settings"
         component={Settings}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,

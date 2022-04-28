@@ -1,16 +1,15 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Button } from 'react-native';
 import { useEffect, useState } from 'react';
-import { Text, View } from '../components/Custom';
-import { RootStackParamList } from '../navigation/index';
+import { Text, View, Button } from '../components/Custom';
+import { BottomTabParamList, RootStackParamList } from '../navigation/index';
 
 import { fetchAllPets, fetchUser } from '../requests';
-import { Pet as PetType } from '../types';
+import { Pet } from '../types';
 import { TagInput } from '../components/Tags';
 
 export default () => {
-  var navigation = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
-  const [pets, setPets] = useState<PetType[]>([]);
+  var stackNav = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
+  const [pets, setPets] = useState<Pet[]>([]);
   const [tags, setTags] = useState<string[]>(['Rottweiler', 'Dumb']);
   useEffect(() => {
     fetchAllPets().then((pets) => {
@@ -27,10 +26,17 @@ export default () => {
         <Button
           title={pet.name}
           key={pet.id}
-          onPress={() => navigation.navigate('PetModal', { pet })}
+          onPress={() => stackNav.navigate('PetModal', { pet })}
+          className="m-2"
         />
       ))}
       <TagInput value={tags} onChange={(t) => setTags(tags)} />
+      <Button
+        title="Results"
+        onPress={() => {
+          stackNav.navigate('Root');
+        }}
+      />
     </View>
   );
 };

@@ -31,9 +31,7 @@ function HeartToggle({ enabled }: { enabled: boolean }) {
 
 function GenderIcon({ gender }: { gender: 'male' | 'female' }) {
   var style =
-    gender == 'male'
-      ? { marginLeft: 3, bottom: -3 }
-      : { marginLeft: 3, bottom: -4 };
+    gender == 'male' ? { marginLeft: 3, bottom: -3 } : { marginLeft: 3, bottom: -4 };
   return (
     <Ionicons
       name={gender}
