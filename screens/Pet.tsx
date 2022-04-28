@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image, ScrollView, Route } from 'react-native';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation';
+import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
+import { BottomTabParamList, RootStackParamList } from '../navigation';
 import tw from 'twrnc';
 
 import Title from '../components/Pet/Title';
@@ -9,6 +9,9 @@ import { Tags } from '../components/Tags';
 import AdoptButton from '../components/Pet/AdoptButton';
 import Seller from '../components/Pet/Seller';
 import { Text, View } from '../components/Custom';
+import { useEffect, useState } from 'react';
+import { HeartToggle } from '../components/Icon';
+import { useAuth } from '../hooks/Auth';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'PetModal'>;
@@ -18,6 +21,34 @@ interface Props {
 function Pet({ route, navigation }: Props) {
   const pet = route.params.pet;
   const { seller } = pet;
+  const { user, setUser } = useAuth();
+  const [isFavorited, setFavorited] = useState(
+    user?.favorites?.find((fav) => fav.id == pet.id) ? true : false,
+  );
+  const tabNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeartToggle value={isFavorited} onPress={(value) => favoritePet(value)} />
+      ),
+    });
+  }, [isFavorited]);
+
+  const favoritePet = (value: boolean) => {
+    if (!user) alert('You must be logged in to favorite pets');
+    else {
+      setFavorited(value);
+      console.log(pet);
+
+      setUser({
+        ...user,
+        favorites: value
+          ? [...user.favorites, pet]
+          : user.favorites.filter((p) => p.id !== pet.id),
+      });
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -30,7 +61,7 @@ function Pet({ route, navigation }: Props) {
         <View className="mx-4">
           <Title name={pet.name} gender={pet.gender} />
           <Tags details={[`${pet.age} ${pet.ageType}`, ...pet.details]} />
-          <AdoptButton />
+          <AdoptButton onPress={() => tabNav.navigate('Messages')} />
           <Text className="mb-3 text-slate-500">
             Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing
             elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque

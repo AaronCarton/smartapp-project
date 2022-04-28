@@ -58,7 +58,6 @@ export default () => {
             headerTransparent: true,
             headerTintColor: '#f1f5f9',
             title: '',
-            headerRight: () => <HeartToggle enabled={false} />,
           }}
         />
         {/* </Stack.Group> */}

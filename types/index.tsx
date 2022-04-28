@@ -19,6 +19,8 @@ export interface User {
   id: string;
   username: string;
   location: string;
+  favorites: Pet[];
+  pets: Pet[];
   email: string;
   image: string;
   password?: string;

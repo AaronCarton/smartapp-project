@@ -1,7 +1,7 @@
 import * as ImagePicker from 'expo-image-picker';
 import { FormError, Pet, User } from '../types';
 
-const BASE_URL = `http://172.30.22.44:5003`;
+const BASE_URL = `http://192.168.0.207:5003`;
 //? 192.168.0.120
 //? 172.30.22.47
 
@@ -83,6 +83,22 @@ export const fetchAllPets = async (): Promise<Pet[]> => {
   }
 };
 
+export const fetchPetBySeller = async (seller: User): Promise<Pet[]> => {
+  try {
+    const response = await fetch(`${BASE_URL}/profile/${seller.id}/pets`);
+    var json = await response.json();
+    var pets = await json.map((pet: Pet) => {
+      pet.image = `${BASE_URL}/images/pets/${pet.id}.webp`;
+      pet.seller = seller;
+      return pet;
+    });
+    return pets;
+  } catch (error) {
+    console.error(error);
+    return [] as Pet[];
+  }
+};
+
 export const loginUser = async (loginBody: {
   email: string;
   password: string;
@@ -133,6 +149,8 @@ export const loginUser = async (loginBody: {
     // if successful, return user
     var user: User = await response.json();
     user.image = `${BASE_URL}/images/users/${user.id}.webp`;
+    user.favorites = [];
+    user.pets = await fetchPetBySeller(user);
     return user;
   } catch (e) {
     console.error(e);

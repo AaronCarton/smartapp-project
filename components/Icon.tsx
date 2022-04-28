@@ -17,25 +17,32 @@ function Icon(props: GenericIconProps) {
   return <Ionicons size={32} {...props} />;
 }
 
-function HeartToggle({ enabled }: { enabled: boolean }) {
-  var [toggled, setToggled] = useState(enabled);
+function HeartToggle({
+  size,
+  value,
+  onPress,
+}: {
+  size?: number;
+  value: boolean;
+  onPress: (value: boolean) => void;
+}) {
   return (
     <Ionicons
-      color={toggled ? '#ef4444' : '#f1f5f9'}
-      name={toggled ? 'heart' : 'heart-outline'}
-      size={28}
-      onPress={() => setToggled(!toggled)}
+      color={value ? '#ef4444' : '#f1f5f9'}
+      name={value ? 'heart' : 'heart-outline'}
+      size={size ?? 28}
+      onPress={() => onPress(!value)}
     />
   );
 }
 
-function GenderIcon({ gender }: { gender: 'male' | 'female' }) {
+function GenderIcon({ gender, size }: { gender: 'male' | 'female'; size?: number }) {
   var style =
     gender == 'male' ? { marginLeft: 3, bottom: -3 } : { marginLeft: 3, bottom: -4 };
   return (
     <Ionicons
       name={gender}
-      size={25}
+      size={size ?? 25}
       color={gender == 'male' ? '#02a3fe' : '#ea48a0'}
       style={style}
     />
