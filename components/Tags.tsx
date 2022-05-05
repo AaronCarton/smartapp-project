@@ -87,7 +87,7 @@ function Tag({ value }: { value: string }) {
 
 function DetailTag({ title }: { title: string }) {
   return (
-    <Text className="mr-2 mb-2 self-start rounded-md bg-slate-300 px-2 py-1 text-center font-comfortaa_semibold text-slate-800">
+    <Text className="mr-2 mb-2 self-start rounded-md bg-slate-300  px-2 py-1 text-center font-comfortaa_semibold text-slate-800 dark:bg-slate-300 dark:text-slate-900">
       {title}
     </Text>
   );

@@ -28,15 +28,21 @@ function Pet({ route, navigation }: Props) {
   const tabNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <HeartToggle value={isFavorited} onPress={(value) => favoritePet(value)} />
-      ),
+      headerRight: () =>
+        seller.id === user?.id ? (
+          <Ionicons name="trash" color={'#f1f5f9'} size={28} />
+        ) : (
+          <HeartToggle value={isFavorited} onPress={(value) => favoritePet(value)} />
+        ),
     });
   }, [isFavorited]);
 
   const favoritePet = (value: boolean) => {
     if (!user) alert('You must be logged in to favorite pets');
     else {
+      if (seller.id === user.id) {
+        // TODO: Delete pet
+      }
       setFavorited(value);
       console.log(pet);
 
@@ -69,8 +75,8 @@ function Pet({ route, navigation }: Props) {
             felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
             massa quis enim. Donec pede justo, fringilla vel, aliquet nec
           </Text>
-          <Text className="text-xl font-bold">Location</Text>
-          <Text className="text-base text-slate-500">
+          <Text className="font-comfortaa_bold text-xl">Location</Text>
+          <Text className="mb-[-8px] text-base text-slate-500">
             <Ionicons name="location" color={'#64748B'} size={15} />
             {pet.location}
           </Text>
