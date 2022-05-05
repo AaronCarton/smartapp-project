@@ -13,24 +13,30 @@ import { View } from '../Custom';
 function AvatarPicker({
   value,
   onChange,
+  aspect,
 }: {
   value?: string;
   onChange: (imageURI: string) => void;
+  aspect: [number, number];
 }) {
   const [image, setImage] = useState<string>(
-    value ??
-      'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg',
+    value ?? 'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg',
   );
 
   useEffect(() => {
-    onChange(image);
+    let img =
+      image ===
+      'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg'
+        ? ''
+        : image;
+    onChange(img);
   }, [image]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [1, 1],
+      aspect: aspect,
       quality: 1,
     });
     if (!result.cancelled) {
@@ -49,8 +55,10 @@ function AvatarPicker({
   return (
     <TouchableWithoutFeedback onPress={() => pickImage()}>
       <View className="relative mx-auto">
-        <Image source={{ uri: image }} style={tw`w-40 h-40 rounded-full`} />
-        <View className="absolute bottom-2 right-2 mx-auto rounded-full bg-[#f2f2f2] p-1.5">
+        <Image source={{ uri: image }} style={tw`w-60 h-40 rounded-lg`} />
+        <View
+          className={`absolute bottom-2 right-2 mx-auto rounded-lg bg-[#f2f2f2] p-1.5`}
+        >
           <MaterialIcons name="edit" size={32} color={'#ef4444'} />
         </View>
       </View>

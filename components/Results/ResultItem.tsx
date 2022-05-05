@@ -15,7 +15,7 @@ function ResultItem({ pet, onPress }: { pet: Pet; onPress: (pet: Pet) => void })
 
   return (
     <TouchableOpacity onPress={() => onPress(pet)} style={{ flex: 1 / 2, margin: 5 }}>
-      <View className="h-50 rounded-[0.5rem]  bg-slate-300">
+      <View className="h-50 rounded-[0.5rem]  bg-slate-300 dark:bg-slate-700">
         <View className="h-[60%]">
           <Image
             source={{ uri: pet.image }}

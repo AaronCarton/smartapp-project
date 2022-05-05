@@ -20,7 +20,7 @@ import Results from '../screens/Results';
 export type RootStackParamList = {
   Root: undefined;
   LoginModal: undefined;
-  RegisterModal: undefined;
+  RegisterModal: { user: User } | undefined;
   AddModal: undefined;
   ProfileModal: { user: User };
   PetModal: { pet: Pet };

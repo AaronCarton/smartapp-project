@@ -30,7 +30,6 @@ export default () => {
       if ((data as FormError).generic !== undefined) {
         setErrors({ ...errors, ...(data as FormError) });
       } else {
-        console.log(data);
         setUser(data as User);
         navigation.navigate('Root');
       }

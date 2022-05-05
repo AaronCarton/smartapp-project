@@ -60,7 +60,7 @@ function Pet({ route, navigation }: Props) {
         />
         <View className="mx-4">
           <Title name={pet.name} gender={pet.gender} />
-          <Tags details={[`${pet.age} ${pet.ageType}`, ...pet.details]} />
+          <Tags details={[`${pet.age} ${pet.ageType} old`, ...pet.details]} />
           <AdoptButton onPress={() => tabNav.navigate('Messages')} />
           <Text className="mb-3 text-slate-500">
             Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing

@@ -53,3 +53,8 @@ export interface FormError {
   generic: GenericError;
   fields: FormFields;
 }
+
+export interface ApiError {
+  field: string;
+  error: string;
+}
