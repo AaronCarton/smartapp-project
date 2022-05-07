@@ -1,5 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
-import { FormError, Pet, User, ApiError } from '../types';
+import { FormError, Pet, User, ApiError, SearchQuery } from '../types';
 
 const BASE_URL = `http://192.168.0.120:5035`;
 //? 192.168.0.120
@@ -114,6 +114,60 @@ export const postUser = async (
   user.favorites = [];
   user.pets = [];
   return user;
+};
+
+export const searchPet = async (searchParams: SearchQuery): Promise<Pet[]> => {
+  try {
+    let filters = [];
+    for (var prop in searchParams) {
+      if (Object.prototype.hasOwnProperty.call(searchParams, prop)) {
+        // @ts-ignore
+        if (searchParams[prop]) {
+          if (prop === 'details') {
+            // @ts-ignore
+            if (searchParams[prop].length > 0) {
+              filters.push(
+                `details: {some: {in: ${JSON.stringify(
+                  searchParams[prop],
+                ).toLowerCase()}}}`,
+              );
+            }
+          } else {
+            filters.push(
+              // @ts-ignore
+              `${prop}: {eq: ${JSON.stringify(searchParams[prop]).toLowerCase()}}`,
+            );
+          }
+        }
+      }
+    }
+    const query = `{
+      pets(where: {${filters.join(', ')}}) {
+        id,created,details,sellerId,name,gender,description,price,location,type,age,ageType
+      }
+    }`;
+
+    const response = await fetch(`${BASE_URL}/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    });
+    let json = await response.json();
+
+    var pets = await json.data.pets.map(async (pet: Pet) => {
+      pet.image = `${BASE_URL}/images/pets/${pet.id}.webp`;
+      pet.seller = await fetchUser(pet.sellerId);
+      return pet;
+    });
+    return Promise.all(pets);
+  } catch (error) {
+    console.error(error);
+    return [] as Pet[];
+  }
 };
 
 export const postPet = async (

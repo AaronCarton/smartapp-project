@@ -1,5 +1,3 @@
-import * as ImagePicker from 'expo-image-picker';
-
 export interface Pet {
   id: string;
   sellerId: string;
@@ -14,6 +12,8 @@ export interface Pet {
   image: string;
   seller: User;
 }
+
+export type SearchQuery = Partial<Pet>;
 
 export interface User {
   id: string;

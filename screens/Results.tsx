@@ -31,35 +31,25 @@ function Results({ route, navigation }: Props) {
     }
   }, [isFocused]);
 
-  if (!results) {
-    return (
-      <View>
-        <Text>Search</Text>
-        <Button
-          title="Search"
-          onPress={() => fetchAllPets().then((pets) => setResults(pets))}
-        />
-      </View>
-    );
-  }
   return (
     <View>
-      <Button
-        title="Search"
-        onPress={() => fetchAllPets().then((pets) => setResults(pets))}
-      />
-      <Text>Results:</Text>
-      <FlatList
-        data={results}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <ResultItem
-            pet={item}
-            onPress={(pet) => stackNav.navigate('PetModal', { pet })}
+      <Button title="Search" onPress={() => stackNav.navigate('SearchModal')} />
+      {results && (
+        <View>
+          <Text>Results:</Text>
+          <FlatList
+            data={results}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <ResultItem
+                pet={item}
+                onPress={(pet) => stackNav.navigate('PetModal', { pet })}
+              />
+            )}
+            keyExtractor={(item) => item.id}
           />
-        )}
-        keyExtractor={(item) => item.id}
-      />
+        </View>
+      )}
     </View>
   );
 }

@@ -13,8 +13,6 @@ export default () => {
   const [tags, setTags] = useState<string[]>(['Rottweiler', 'Dumb']);
   useEffect(() => {
     fetchAllPets().then((pets) => {
-      console.log(pets);
-
       setPets(pets);
     });
   }, []);
