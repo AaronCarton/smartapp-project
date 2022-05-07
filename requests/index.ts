@@ -143,11 +143,13 @@ export const searchPet = async (searchParams: SearchQuery): Promise<Pet[]> => {
         }
       }
     }
+
     const query = `{
-      pets(where: {${filters.join(', ')}}) {
+      pets${filters.length > 0 ? `(where: {${filters.join(', ')}})` : ''} {
         id,created,details,sellerId,name,gender,description,price,location,type,age,ageType
       }
     }`;
+    console.log(query);
 
     // post query string to API
     const response = await fetch(`${BASE_URL}/graphql`, {

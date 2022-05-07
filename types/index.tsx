@@ -13,7 +13,9 @@ export interface Pet {
   seller: User;
 }
 
-export type SearchQuery = Partial<Pet>;
+export type SearchQuery = Partial<Omit<Pet, 'gender'>> & {
+  gender: 'male' | 'female' | 'all';
+};
 
 export interface User {
   id: string;

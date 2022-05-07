@@ -10,9 +10,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 export default () => {
   const bottomNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
-  const [searchQuery, setSearchQuery] = useState<SearchQuery>({});
+  const [searchQuery, setSearchQuery] = useState<SearchQuery>({} as SearchQuery);
   const [age, setAge] = useState<string>('');
-
   useEffect(() => {
     if (age) {
       let arr = age.split(' ');
@@ -26,6 +25,8 @@ export default () => {
   }, [age]);
 
   const search = () => {
+    console.log(searchQuery);
+
     searchPet(searchQuery).then((res) => {
       console.log(res);
 
@@ -65,10 +66,13 @@ export default () => {
         <Picker
           style={tw`dark:text-slate-200`}
           selectedValue={searchQuery.type}
-          onValueChange={(itemValue, itemIndex) =>
-            setSearchQuery({ ...searchQuery, type: itemValue })
-          }
+          onValueChange={(itemValue, itemIndex) => {
+            if (itemValue !== 'all') {
+              setSearchQuery({ ...searchQuery, type: itemValue });
+            }
+          }}
         >
+          <Picker.Item label="All" value="all" />
           <Picker.Item label="Dog" value="Dog" />
           <Picker.Item label="Cat" value="Cat" />
           <Picker.Item label="Rat" value="Rat" />
@@ -83,10 +87,13 @@ export default () => {
         <Picker
           style={tw`dark:text-slate-200`}
           selectedValue={searchQuery.gender}
-          onValueChange={(itemValue, itemIndex) =>
-            setSearchQuery({ ...searchQuery, gender: itemValue })
-          }
+          onValueChange={(itemValue, itemIndex) => {
+            if (itemValue !== 'all') {
+              setSearchQuery({ ...searchQuery, gender: itemValue });
+            }
+          }}
         >
+          <Picker.Item label="All" value="all" />
           <Picker.Item label="Male" value="male" />
           <Picker.Item label="Female" value="female" />
         </Picker>
