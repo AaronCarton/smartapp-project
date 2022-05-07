@@ -6,35 +6,23 @@ import { BottomTabParamList, RootStackParamList } from '../navigation/index';
 import { fetchAllPets, fetchUser } from '../requests';
 import { Pet } from '../types';
 import { TagInput } from '../components/Tags';
+import { useAuth } from '../hooks/Auth';
 
 export default () => {
-  var stackNav = useNavigation<NavigationProp<RootStackParamList, 'Root'>>();
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [tags, setTags] = useState<string[]>(['Rottweiler', 'Dumb']);
-  useEffect(() => {
-    fetchAllPets().then((pets) => {
-      setPets(pets);
-    });
-  }, []);
+  let tabNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
+  const { user, setUser } = useAuth();
 
   return (
     <View>
-      <Text>Home</Text>
-      {pets.map((pet) => (
+      <Text className="my-4 text-center text-2xl">
+        Welcome{user && `, ${user.username}`}
+      </Text>
+      {user && user!.favorites.length > 0 && (
         <Button
-          title={pet.name}
-          key={pet.id}
-          onPress={() => stackNav.navigate('PetModal', { pet })}
-          className="m-2"
+          title="Check out your favorites"
+          onPress={() => tabNav.navigate('Search', { petList: user?.favorites })}
         />
-      ))}
-      <TagInput value={tags} onChange={(t) => setTags(tags)} />
-      <Button
-        title="Results"
-        onPress={() => {
-          stackNav.navigate('Root');
-        }}
-      />
+      )}
     </View>
   );
 };

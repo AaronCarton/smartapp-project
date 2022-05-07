@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { TagInput } from '../../components/Tags';
-import { Text, View, TextInput, Button } from '../../components/Custom';
+import { Text, View, TextInput, Button, tw } from '../../components/Custom';
 import AvatarPicker from '../../components/Register/AvatarPicker';
 import { FormError, Pet } from '../../types';
 import { Picker } from '@react-native-picker/picker';
@@ -104,7 +104,7 @@ export default () => {
         />
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.name.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -119,7 +119,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.age.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -133,7 +133,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.gender.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -142,6 +142,7 @@ export default () => {
               : 'Gender'}
           </Text>
           <Picker
+            style={tw`dark:text-slate-200`}
             selectedValue={newPet.gender}
             onValueChange={(itemValue, itemIndex) =>
               setNewPet({ ...newPet, gender: itemValue })
@@ -153,13 +154,14 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.type.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
             {errors.fields.type.hasError ? errors.fields.type.inlineErrorMessage : 'Type'}
           </Text>
           <Picker
+            style={tw`dark:text-slate-200`}
             selectedValue={newPet.type}
             onValueChange={(itemValue, itemIndex) =>
               setNewPet({ ...newPet, type: itemValue })
@@ -174,7 +176,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.location.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -191,7 +193,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.description.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -211,7 +213,7 @@ export default () => {
         </View>
         <View>
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
               errors.fields.details.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
