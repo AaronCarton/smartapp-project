@@ -19,7 +19,9 @@ function Seller({
       <View className="my-6 flex-row">
         <Image style={tw`h-16 w-16 rounded-md`} source={{ uri: avatar }} />
         <View className="my-4 mx-2">
-          <Text className="font-comfortaa_bold text-base leading-none">{name}</Text>
+          <Text className="font-comfortaa_bold text-base capitalize leading-none">
+            {name}
+          </Text>
           <Text className="text-sm leading-5 text-slate-500">
             <Ionicons name="location" color={'#64748B'} />
             {location}

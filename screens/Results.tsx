@@ -33,10 +33,13 @@ function Results({ route, navigation }: Props) {
 
   return (
     <View>
-      <Button title="Search" onPress={() => stackNav.navigate('SearchModal')} />
+      <Button
+        className="m-4"
+        title="Search"
+        onPress={() => stackNav.navigate('SearchModal')}
+      />
       {results && (
         <View>
-          <Text>Results:</Text>
           <FlatList
             data={results}
             numColumns={2}

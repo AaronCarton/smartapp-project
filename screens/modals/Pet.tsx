@@ -79,13 +79,9 @@ function Pet({ route, navigation }: Props) {
           <Title name={pet.name} gender={pet.gender} />
           <Tags details={[`${pet.age} ${pet.ageType} old`, ...pet.details]} />
           <AdoptButton onPress={() => tabNav.navigate('Messages')} />
-          <Text className="mb-3 text-slate-500">
-            Some description here Lorem ipsum dolor sit amet, consectetuer adipiscing
-            elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam
-            felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-            massa quis enim. Donec pede justo, fringilla vel, aliquet nec
-          </Text>
+          <Text className="mb-3 text-slate-500">{pet.description}</Text>
+        </View>
+        <View className="mx-4  mt-auto ">
           <Text className="font-comfortaa_bold text-xl">Location</Text>
           <Text className="mb-[-8px] text-base text-slate-500">
             <Ionicons name="location" color={'#64748B'} size={15} />

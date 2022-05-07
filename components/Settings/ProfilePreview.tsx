@@ -13,8 +13,10 @@ function ProfilePreview({ user }: { user: User }) {
           <View className="flex-row">
             <Image source={{ uri: user.image }} style={tw`h-14 w-14 rounded-full`} />
             <View className="ml-2.5">
-              <Text className="font-comfortaa_bold text-lg">{user.username}</Text>
-              <Text className="text-xs text-slate-500">{user.location}</Text>
+              <Text className="font-comfortaa_bold text-lg capitalize">
+                {user.username}
+              </Text>
+              <Text className="text-xs capitalize text-slate-500">{user.location}</Text>
             </View>
           </View>
           <View>

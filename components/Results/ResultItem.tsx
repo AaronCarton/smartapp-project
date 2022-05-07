@@ -29,13 +29,13 @@ function ResultItem({ pet, onPress }: { pet: Pet; onPress: (pet: Pet) => void })
         </View>
         <View className="mx-2">
           <View className="flex-row justify-between">
-            <Text className="font-comfortaa_bold text-lg">{pet.name}</Text>
+            <Text className="font-comfortaa_bold text-lg capitalize">{pet.name}</Text>
             <GenderIcon gender={pet.gender} size={20} />
           </View>
           <Text className="font-comfortaa_semibold text-xs text-slate-600 dark:text-neutral-50">
             {description}
           </Text>
-          <Text className="font-comfortaa_semibold text-xs text-slate-600 dark:text-neutral-50">
+          <Text className="font-comfortaa_semibold text-xs capitalize text-slate-600 dark:text-neutral-50">
             {pet.seller.location}
           </Text>
         </View>
