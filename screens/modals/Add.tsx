@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { TagInput } from '../components/Tags';
-import { Text, View, TextInput, Button } from '../components/Custom';
-import AvatarPicker from '../components/Register/AvatarPicker';
-import { FormError, Pet } from '../types';
+import { TagInput } from '../../components/Tags';
+import { Text, View, TextInput, Button } from '../../components/Custom';
+import AvatarPicker from '../../components/Register/AvatarPicker';
+import { FormError, Pet } from '../../types';
 import { Picker } from '@react-native-picker/picker';
-import { postPet } from '../requests';
-import { useAuth } from '../hooks/Auth';
+import { postPet } from '../../requests';
+import { useAuth } from '../../hooks/Auth';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation';
+import { RootStackParamList } from '../../navigation';
 
 export default () => {
   const errorBase = {

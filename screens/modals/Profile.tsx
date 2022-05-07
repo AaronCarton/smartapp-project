@@ -1,9 +1,9 @@
 import { Image } from 'react-native';
-import { Text, View, Button } from '../components/Custom';
-import { User } from '../types';
+import { Text, View, Button } from '../../components/Custom';
+import { User } from '../../types';
 import tw from 'twrnc';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../navigation';
+import { RootStackParamList } from '../../navigation';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ProfileModal'>;

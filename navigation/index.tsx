@@ -4,17 +4,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Pet, User } from '../types';
 
 import Home from '../screens/Home';
-import Search from '../screens/Search';
+import Search from '../screens/modals/Search';
 import Settings from '../screens/Settings';
-import Add from '../screens/Add';
-import PetScreen from '../screens/Pet';
+import Add from '../screens/modals/Add';
+import PetScreen from '../screens/modals/Pet';
 import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
 import Messages from '../screens/Messages';
 
 import { HeartToggle, TabIcon } from '../components/Icon';
 import { CustomDarkTheme, useDarkMode } from '../hooks/darkmode';
-import Profile from '../screens/Profile';
+import Profile from '../screens/modals/Profile';
 import Results from '../screens/Results';
 
 export type RootStackParamList = {
@@ -24,6 +24,7 @@ export type RootStackParamList = {
   AddModal: undefined;
   ProfileModal: { user: User };
   PetModal: { pet: Pet };
+  SearchModal: undefined;
 };
 
 export type BottomTabParamList = {
@@ -51,6 +52,7 @@ export default () => {
         <Stack.Screen name="LoginModal" component={Login} />
         <Stack.Screen name="RegisterModal" component={Register} />
         <Stack.Screen name="ProfileModal" component={Profile} />
+        <Stack.Screen name="SearchModal" component={Search} />
         <Stack.Screen
           name="PetModal"
           component={PetScreen}

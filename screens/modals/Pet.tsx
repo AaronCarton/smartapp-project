@@ -1,17 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image, ScrollView, Route } from 'react-native';
 import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
-import { BottomTabParamList, RootStackParamList } from '../navigation';
+import { BottomTabParamList, RootStackParamList } from '../../navigation';
 import tw from 'twrnc';
 
-import Title from '../components/Pet/Title';
-import { Tags } from '../components/Tags';
-import AdoptButton from '../components/Pet/AdoptButton';
-import Seller from '../components/Pet/Seller';
-import { Text, View } from '../components/Custom';
+import Title from '../../components/Pet/Title';
+import { Tags } from '../../components/Tags';
+import AdoptButton from '../../components/Pet/AdoptButton';
+import Seller from '../../components/Pet/Seller';
+import { Text, View } from '../../components/Custom';
 import { useEffect, useState } from 'react';
-import { HeartToggle } from '../components/Icon';
-import { useAuth } from '../hooks/Auth';
+import { HeartToggle } from '../../components/Icon';
+import { useAuth } from '../../hooks/Auth';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'PetModal'>;
