@@ -12,6 +12,8 @@ import { Text, View } from '../../components/Custom';
 import { useEffect, useState } from 'react';
 import { HeartToggle } from '../../components/Icon';
 import { useAuth } from '../../hooks/Auth';
+import { deletePet } from '../../requests';
+import { Pet as PetType } from '../../types';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'PetModal'>;
@@ -30,22 +32,31 @@ function Pet({ route, navigation }: Props) {
     navigation.setOptions({
       headerRight: () =>
         seller.id === user?.id ? (
-          <Ionicons name="trash" color={'#f1f5f9'} size={28} />
+          <Ionicons
+            name="trash"
+            color={'#f1f5f9'}
+            size={28}
+            onPress={() => removePet()}
+          />
         ) : (
           <HeartToggle value={isFavorited} onPress={(value) => favoritePet(value)} />
         ),
     });
   }, [isFavorited]);
 
+  const removePet = () =>
+    deletePet(pet, user?.token!).then((success) => {
+      if (!success) alert('Could not delete pet');
+      else {
+        // remove pet from user's pet list
+        setUser({ ...user, pets: user!.pets.filter((p: PetType) => p.id !== pet.id) });
+        tabNav.navigate('Home');
+      }
+    });
   const favoritePet = (value: boolean) => {
     if (!user) alert('You must be logged in to favorite pets');
     else {
-      if (seller.id === user.id) {
-        // TODO: Delete pet
-      }
       setFavorited(value);
-      console.log(pet);
-
       setUser({
         ...user,
         favorites: value

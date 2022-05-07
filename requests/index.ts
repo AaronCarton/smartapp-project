@@ -1,4 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
+import { useAuth } from '../hooks/Auth';
 import { FormError, Pet, User, ApiError, SearchQuery } from '../types';
 
 const BASE_URL = `http://192.168.0.120:5035`;
@@ -118,6 +119,7 @@ export const postUser = async (
 
 export const searchPet = async (searchParams: SearchQuery): Promise<Pet[]> => {
   try {
+    // create a GraphQL query string based on given search params
     let filters = [];
     for (var prop in searchParams) {
       if (Object.prototype.hasOwnProperty.call(searchParams, prop)) {
@@ -147,6 +149,7 @@ export const searchPet = async (searchParams: SearchQuery): Promise<Pet[]> => {
       }
     }`;
 
+    // post query string to API
     const response = await fetch(`${BASE_URL}/graphql`, {
       method: 'POST',
       headers: {
@@ -183,6 +186,7 @@ export const postPet = async (
   let match = /\.(\w+)$/.exec(filename!);
   let type = match ? `image/${match[1]}` : `image`;
 
+  // create formdata
   let formdata = new FormData();
   formdata.append('name', pet.name.trim());
   formdata.append('description', pet.description.trim());
@@ -195,6 +199,8 @@ export const postPet = async (
   formdata.append('price', '0');
   // @ts-ignore
   formdata.append('image', { uri: localUri, name: filename, type });
+
+  // post to API
   const response = await fetch(`${BASE_URL}/pets/register`, {
     method: method,
     headers: {
@@ -204,6 +210,7 @@ export const postPet = async (
     body: formdata,
   });
 
+  // if unsuccessful, return error
   if (response.status === 400) {
     const json = await response.json();
     const error: FormError = {
@@ -224,6 +231,22 @@ export const postPet = async (
   resPet.image = `${BASE_URL}/images/pets/${resPet.id}.webp`;
   resPet.seller = user;
   return resPet;
+};
+
+export const deletePet = async (pet: Pet, userToken: string) => {
+  try {
+    // delete pet from database
+    const response = await fetch(`${BASE_URL}/pets/${pet.id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    console.log(response);
+    return response.status === 200;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const loginUser = async (loginBody: {

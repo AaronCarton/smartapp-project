@@ -29,7 +29,14 @@ export default () => {
       <SettingsItem
         title={'Listed pets'}
         iconName={'list'}
-        onPress={() => tabNav.navigate('Search', { petList: user?.pets })}
+        onPress={() => {
+          tabNav.navigate('Search', {
+            petList: user?.pets.map((pet) => {
+              pet.seller.pets = [];
+              return pet;
+            }),
+          });
+        }}
         right={
           <Text className="mr-4 font-comfortaa_bold text-base">
             {user.pets.length || ''}
