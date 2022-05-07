@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { TextInput, TextInput as TI, TouchableWithoutFeedback } from 'react-native';
-import { Text, View } from './Custom';
+import { Text, View, tw } from './Custom';
 import useDarkMode from '../hooks/darkmode';
-import tw from 'twrnc';
 
 /**
  * Input with tags system

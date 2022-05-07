@@ -18,14 +18,14 @@ function InputField({ title, titleStyle, regex, ...props }: InputFieldProps) {
   return (
     <View className="mb-2">
       <Text
-        className={`mb-0.5 font-comfortaa_bold text-slate-600 ${titleStyle} ${
+        className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${titleStyle} ${
           error ? 'text-red-500 dark:text-red-500' : ''
         } `}
       >
         {`${title} ${error ? 'incorrect' : ''}`}
       </Text>
       <TextInput
-        className={`rounded-md border-2 border-slate-700 py-1 px-3 ${
+        className={`rounded-md border-2 border-slate-700 py-1 px-3  ${
           error ? 'border-red-400 text-red-500 dark:text-red-500' : ''
         }`}
         {...props}

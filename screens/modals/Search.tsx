@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, View } from '../../components/Custom';
+import { Button, Text, TextInput, tw, View } from '../../components/Custom';
 import { Picker } from '@react-native-picker/picker';
 import { useEffect, useState } from 'react';
 import { SearchQuery } from '../../types';
@@ -59,8 +59,11 @@ export default () => {
         onChangeText={(age) => setAge(age)}
       />
       <View>
-        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Type</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200">
+          Type
+        </Text>
         <Picker
+          style={tw`dark:text-slate-200`}
           selectedValue={searchQuery.type}
           onValueChange={(itemValue, itemIndex) =>
             setSearchQuery({ ...searchQuery, type: itemValue })
@@ -74,8 +77,11 @@ export default () => {
         </Picker>
       </View>
       <View>
-        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Type</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200">
+          Type
+        </Text>
         <Picker
+          style={tw`dark:text-slate-200`}
           selectedValue={searchQuery.gender}
           onValueChange={(itemValue, itemIndex) =>
             setSearchQuery({ ...searchQuery, gender: itemValue })
@@ -86,7 +92,9 @@ export default () => {
         </Picker>
       </View>
       <View>
-        <Text className="mb-0.5 font-comfortaa_bold text-slate-600">Details</Text>
+        <Text className="mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200">
+          Details
+        </Text>
         <TagInput
           value={searchQuery.details ?? []}
           onChange={(details) => setSearchQuery({ ...searchQuery, details })}
