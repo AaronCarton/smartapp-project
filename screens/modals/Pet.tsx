@@ -1,19 +1,19 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Image, ScrollView, Route } from 'react-native';
+import { Image, ScrollView, Modal, Pressable } from 'react-native';
 import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import { BottomTabParamList, RootStackParamList } from '../../navigation';
-import tw from 'twrnc';
 
 import Title from '../../components/Pet/Title';
 import { Tags } from '../../components/Tags';
 import AdoptButton from '../../components/Pet/AdoptButton';
 import Seller from '../../components/Pet/Seller';
-import { Text, View } from '../../components/Custom';
+import { Text, View, tw, Button } from '../../components/Custom';
 import { useEffect, useState } from 'react';
 import { HeartToggle } from '../../components/Icon';
 import { useAuth } from '../../hooks/Auth';
 import { deletePet } from '../../requests';
 import { Pet as PetType } from '../../types';
+import ProfileModal from '../../components/ProfileModal';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'PetModal'>;
@@ -24,10 +24,12 @@ function Pet({ route, navigation }: Props) {
   const pet = route.params.pet;
   const { seller } = pet;
   const { user, setUser } = useAuth();
+  const [isVisible, setIsVisible] = useState(false);
   const [isFavorited, setFavorited] = useState(
     user?.favorites?.find((fav) => fav.id == pet.id) ? true : false,
   );
   const tabNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>
@@ -67,37 +69,45 @@ function Pet({ route, navigation }: Props) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Image
-          style={tw`w-full h-[35%] rounded-b-3xl`}
-          source={{
-            uri: pet.image,
-          }}
+    <>
+      <View style={{ flex: 1 }}>
+        <ProfileModal
+          user={seller}
+          shown={isVisible}
+          onChangeShown={(visible) => setIsVisible(visible)}
         />
-        <View className="mx-4">
-          <Title name={pet.name} gender={pet.gender} />
-          <Tags details={[`${pet.age} ${pet.ageType} old`, ...pet.details]} />
-          <AdoptButton onPress={() => tabNav.navigate('Messages')} />
-          <Text className="mb-3 text-slate-500">{pet.description}</Text>
-        </View>
-        <View className="mx-4  mt-auto ">
-          <Text className="font-comfortaa_bold text-xl">Location</Text>
-          <Text className="mb-[-8px] text-base capitalize text-slate-500">
-            <Ionicons name="location" color={'#64748B'} size={15} />
-            {pet.location}
-          </Text>
-          <Seller
-            name={seller.username}
-            location={seller.location}
-            avatar={seller.image}
-            onPress={() => {
-              navigation.navigate('ProfileModal', { user: seller });
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <Image
+            style={tw`w-full h-[35%] rounded-b-3xl`}
+            source={{
+              uri: pet.image,
             }}
           />
-        </View>
-      </ScrollView>
-    </View>
+          <View className="mx-4">
+            <Title name={pet.name} gender={pet.gender} />
+            <Tags details={[`${pet.age} ${pet.ageType} old`, ...pet.details]} />
+            <AdoptButton onPress={() => tabNav.navigate('Messages')} />
+            <Text className="mb-3 text-slate-500">{pet.description}</Text>
+          </View>
+          <View className="mx-4  mt-auto ">
+            <Text className="font-comfortaa_bold text-xl">Location</Text>
+            <Text className="mb-[-8px] text-base capitalize text-slate-500">
+              <Ionicons name="location" color={'#64748B'} size={15} />
+              {pet.location}
+            </Text>
+            <Seller
+              name={seller.username}
+              location={seller.location}
+              avatar={seller.image}
+              onPress={() => {
+                setIsVisible(true);
+                // navigation.navigate('ProfileModal', { user: seller });
+              }}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    </>
   );
 }
 
