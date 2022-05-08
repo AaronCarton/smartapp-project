@@ -72,14 +72,14 @@ export default () => {
   const register = () => {
     postPet(newPet, user!).then((response) => {
       if ((response as FormError).generic !== undefined) {
-        console.log(response);
         setErrors({
           ...errors,
           fields: { ...errors.fields, ...(response as FormError).fields },
         });
       } else {
-        setUser({ ...user, pets: [...user!.pets, response as Pet] });
-        stackNav.goBack();
+        user?.pets.push(response as Pet);
+        setUser({ ...user });
+        stackNav.navigate('Root');
       }
     });
   };
