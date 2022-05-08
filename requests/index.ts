@@ -85,6 +85,7 @@ export const postUser = async (
   formdata.append('password', user.password!.trim());
   formdata.append('email', user.email.trim());
   formdata.append('location', user.location.trim());
+  formdata.append('bio', user.bio.trim());
   // @ts-ignore
   formdata.append('image', { uri: localUri, name: filename, type });
   const response = await fetch(`${BASE_URL}/profile/register`, {
@@ -149,7 +150,6 @@ export const searchPet = async (searchParams: SearchQuery): Promise<Pet[]> => {
         id,created,details,sellerId,name,gender,description,price,location,type,age,ageType
       }
     }`;
-    console.log(query);
 
     // post query string to API
     const response = await fetch(`${BASE_URL}/graphql`, {
@@ -180,8 +180,6 @@ export const postPet = async (
   user: User,
   method: 'POST' | 'PUT' = 'POST',
 ): Promise<Pet | FormError> => {
-  console.log(pet);
-
   // get image data
   let localUri = pet.image;
   let filename = localUri.split('/').pop();
@@ -227,7 +225,6 @@ export const postPet = async (
     });
     return error;
   }
-  console.log(await response.json());
 
   var resPet: Pet = await response.json();
   resPet.image = `${BASE_URL}/images/pets/${resPet.id}.webp`;
@@ -244,7 +241,6 @@ export const deletePet = async (pet: Pet, userToken: string) => {
         Authorization: `Bearer ${userToken}`,
       },
     });
-    console.log(response);
     return response.status === 200;
   } catch (error) {
     console.error(error);
@@ -277,6 +273,7 @@ export const loginUser = async (loginBody: {
       },
       body: JSON.stringify(loginBody),
     });
+
     // if user not found, return error
     if (response.status === 404)
       return {

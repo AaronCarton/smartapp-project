@@ -21,6 +21,7 @@ export interface User {
   id: string;
   username: string;
   location: string;
+  bio: string;
   favorites: Pet[];
   pets: Pet[];
   email: string;

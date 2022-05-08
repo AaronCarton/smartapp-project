@@ -29,6 +29,7 @@ export default ({ route, navigation }: Props) => {
     password: '',
     location: '',
     image: '',
+    bio: '',
   } as User);
   const errorBase = {
     generic: { title: '', message: '' },
@@ -49,6 +50,10 @@ export default ({ route, navigation }: Props) => {
         hasError: false,
         inlineErrorMessage: '',
       },
+      bio: {
+        hasError: false,
+        inlineErrorMessage: '',
+      },
     },
   } as FormError;
   const [errors, setErrors] = useState<FormError>(errorBase);
@@ -56,7 +61,6 @@ export default ({ route, navigation }: Props) => {
   const register = () => {
     postUser(newUser).then((response) => {
       if ((response as FormError).generic !== undefined) {
-        console.log(response);
         setErrors({
           ...errors,
           fields: { ...errors.fields, ...(response as FormError).fields },
@@ -77,7 +81,6 @@ export default ({ route, navigation }: Props) => {
     let userP = route.params?.user;
     // if params were passed, set state
     if (userP) {
-      console.log(userP);
       setNewUser({ ...userP });
       navigation.setParams({ user: undefined }); // empty the params, otherwise it will keep replacing the list on focus
     }
@@ -159,6 +162,24 @@ export default ({ route, navigation }: Props) => {
           onChangeText={(location) => setNewUser({ ...newUser, location })}
           placeholder="Location"
           className="rounded-md border-2 border-slate-700 py-1 px-3"
+        />
+      </View>
+      <View className="mb-2">
+        <Text
+          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+            errors.fields.bio.hasError ? 'text-red-500 dark:text-red-500' : ''
+          } `}
+        >
+          {errors.fields.bio.hasError ? errors.fields.bio.inlineErrorMessage : 'Bio'}
+        </Text>
+        <TextInput
+          className="rounded-md border-2 border-slate-700 py-1 px-3"
+          placeholder="20 year old student"
+          numberOfLines={4}
+          multiline={true}
+          textAlignVertical="top"
+          value={newUser.bio}
+          onChangeText={(bio) => setNewUser({ ...newUser, bio })}
         />
       </View>
       <View className="mt-3 mb-2">
