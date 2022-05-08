@@ -24,10 +24,11 @@ export default () => {
           let dateB = new Date(b.created);
           return dateB.getTime() - dateA.getTime();
         })
-        .slice(-4);
+        .slice(0, 4);
+
       setRecentlyAdded(sortedPets);
     });
-  }, []);
+  });
 
   const searchPets = (query: SearchQuery) => {
     console.log(query);
@@ -38,15 +39,9 @@ export default () => {
   return (
     <View>
       <ScrollView contentContainerStyle={{ paddingTop: 20, paddingBottom: 30 }}>
-        <Text className="my-4 text-center text-2xl">
+        <Text className="my-4 text-center font-comfortaa_bold text-2xl">
           Welcome{user && `, ${user.username}`}
         </Text>
-        {user && user!.favorites.length > 0 && (
-          <Button
-            title="Check out your favorites"
-            onPress={() => tabNav.navigate('Search', { petList: user?.favorites })}
-          />
-        )}
         <View>
           <Text className="my-4 text-center font-comfortaa_semibold text-2xl">
             Find your pet

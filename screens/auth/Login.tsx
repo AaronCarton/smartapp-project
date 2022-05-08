@@ -54,6 +54,7 @@ export default () => {
 
   return (
     <View className="mx-14 h-full justify-center">
+      <Text className="mb-16 text-center font-comfortaa_semibold text-3xl">Login</Text>
       <View className="mb-2">
         <Text
           className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-300 ${
@@ -94,7 +95,7 @@ export default () => {
       </View>
       <TouchableWithoutFeedback onPress={() => navigation.navigate('RegisterModal')}>
         <View className="w-full p-2">
-          <Text className="text-center font-comfortaa_bold text-slate-600">
+          <Text className="text-center font-comfortaa_bold text-slate-600 dark:text-slate-500">
             Create account
           </Text>
         </View>

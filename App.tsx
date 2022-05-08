@@ -45,12 +45,12 @@ export default function App() {
       >
         <View style={{ flex: 1, backgroundColor: bgColor }}>
           <AuthContext.Provider value={{ user, setUser }}>
+            <StatusBar style={colorScheme == 'light' ? 'dark' : 'light'} />
             <Navigation />
           </AuthContext.Provider>
         </View>
       </DarkModeContext.Provider>
       {/* If colorScheme is in light mode, make the statusbar black, otherwise make it white */}
-      <StatusBar style={colorScheme == 'light' ? 'dark' : 'light'} />
     </SafeAreaProvider>
   );
 }

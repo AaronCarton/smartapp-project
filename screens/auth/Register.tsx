@@ -208,7 +208,7 @@ export default ({ route, navigation }: Props) => {
       </View>
       <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
         <View className="w-full p-2">
-          <Text className="text-center font-comfortaa_bold text-slate-600">
+          <Text className="text-center font-comfortaa_bold text-slate-600 dark:text-slate-500">
             Already have an account? Login
           </Text>
         </View>

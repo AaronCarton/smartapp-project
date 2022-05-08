@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { Pet, User } from '../types';
 
 import Home from '../screens/Home';
@@ -12,10 +13,11 @@ import Login from '../screens/auth/Login';
 import Register from '../screens/auth/Register';
 import Messages from '../screens/Messages';
 
-import { HeartToggle, TabIcon } from '../components/Icon';
+import { TabIcon } from '../components/Icon';
 import { CustomDarkTheme, useDarkMode } from '../hooks/darkmode';
 import Profile from '../screens/modals/Profile';
 import Results from '../screens/Results';
+import { tw } from '../components/Custom';
 
 export type RootStackParamList = {
   Root: undefined;
@@ -48,11 +50,19 @@ export default () => {
           options={{ headerShown: false }}
         />
         {/* <Stack.Group screenOptions={{ presentation: 'modal' }}> */}
-        <Stack.Screen name="AddModal" component={Add} />
-        <Stack.Screen name="LoginModal" component={Login} />
-        <Stack.Screen name="RegisterModal" component={Register} />
+        <Stack.Screen
+          name="AddModal"
+          component={Add}
+          options={{ title: 'Register pet' }}
+        />
+        <Stack.Screen name="LoginModal" component={Login} options={{ title: '' }} />
+        <Stack.Screen name="RegisterModal" component={Register} options={{ title: '' }} />
         <Stack.Screen name="ProfileModal" component={Profile} />
-        <Stack.Screen name="SearchModal" component={Search} />
+        <Stack.Screen
+          name="SearchModal"
+          component={Search}
+          options={{ title: 'Search' }}
+        />
         <Stack.Screen
           name="PetModal"
           component={PetScreen}
@@ -73,7 +83,10 @@ function BottomTab() {
 
   return (
     <Tab.Navigator
-      screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: '#ef4444' }}
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: '#ef4444',
+      }}
     >
       <Tab.Screen
         name="Home"
@@ -109,6 +122,10 @@ function BottomTab() {
         component={Messages}
         options={{
           tabBarIcon: ({ color }) => <TabIcon name="message" color={color} />,
+
+          headerRight: () => (
+            <FontAwesome5 style={tw`mr-3`} name="pen" size={20} color="#ef4444" />
+          ),
         }}
       />
       <Tab.Screen

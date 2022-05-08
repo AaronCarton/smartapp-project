@@ -12,6 +12,7 @@ export default () => {
   const bottomNav = useNavigation<NavigationProp<BottomTabParamList, 'Home'>>();
   const [searchQuery, setSearchQuery] = useState<SearchQuery>({} as SearchQuery);
   const [age, setAge] = useState<string>('');
+
   useEffect(() => {
     if (age) {
       let arr = age.split(' ');

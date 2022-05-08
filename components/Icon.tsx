@@ -1,5 +1,4 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
 
 interface GenericIconProps {
   name: React.ComponentProps<typeof Ionicons>['name'];
