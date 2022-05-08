@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, tw, View } from '../../components/Custom';
+import { Button, Text, tw, View } from '../../components/Custom';
 import { Picker } from '@react-native-picker/picker';
 import { useEffect, useState } from 'react';
 import { SearchQuery } from '../../types';
@@ -69,11 +69,11 @@ export default () => {
           }}
         >
           <Picker.Item label="All" value="all" />
-          <Picker.Item label="Dog" value="Dog" />
-          <Picker.Item label="Cat" value="Cat" />
-          <Picker.Item label="Rat" value="Rat" />
-          <Picker.Item label="Hamster" value="Hamster" />
-          <Picker.Item label="Rabbit" value="Rabbit" />
+          <Picker.Item label="Dog" value="dog" />
+          <Picker.Item label="Cat" value="cat" />
+          <Picker.Item label="Rat" value="rat" />
+          <Picker.Item label="Hamster" value="hamster" />
+          <Picker.Item label="Rabbit" value="rabbit" />
         </Picker>
       </View>
       <View>

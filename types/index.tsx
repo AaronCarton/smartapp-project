@@ -3,6 +3,7 @@ export interface Pet {
   sellerId: string;
   name: string;
   gender: 'male' | 'female';
+  created: string;
   description: string;
   location: string;
   type: string;

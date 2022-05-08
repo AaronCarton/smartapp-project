@@ -73,13 +73,7 @@ function BottomTab() {
 
   return (
     <Tab.Navigator
-      screenOptions={{ tabBarShowLabel: false }}
-      sceneContainerStyle={
-        {
-          // paddingTop: StatusBar.currentHeight,
-          // paddingHorizontal: 5,
-        }
-      }
+      screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: '#ef4444' }}
     >
       <Tab.Screen
         name="Home"
