@@ -81,11 +81,11 @@ export const postUser = async (
   let type = match ? `image/${match[1]}` : `image`;
 
   let formdata = new FormData();
-  formdata.append('username', user.username.trim());
-  formdata.append('password', user.password!.trim());
-  formdata.append('email', user.email.trim());
-  formdata.append('location', user.location.trim());
-  formdata.append('bio', user.bio.trim());
+  formdata.append('username', user.username);
+  formdata.append('password', user.password!);
+  formdata.append('email', user.email);
+  formdata.append('location', user.location);
+  formdata.append('bio', user.bio);
   // @ts-ignore
   formdata.append('image', { uri: localUri, name: filename, type });
   const response = await fetch(`${BASE_URL}/profile/register`, {
@@ -188,8 +188,8 @@ export const postPet = async (
 
   // create formdata
   let formdata = new FormData();
-  formdata.append('name', pet.name.trim());
-  formdata.append('description', pet.description.trim());
+  formdata.append('name', pet.name);
+  formdata.append('description', pet.description);
   formdata.append('type', pet.type);
   formdata.append('age', pet.age.toString());
   formdata.append('ageType', pet.ageType);

@@ -23,14 +23,14 @@ export default ({ route, navigation }: Props) => {
   var navigation = useNavigation<NavigationProp<RootStackParamList, 'RegisterModal'>>();
   const isFocused = useIsFocused();
   const { user, setUser } = useAuth();
-  const [newUser, setNewUser] = useState<User>({
-    username: '',
-    email: '',
-    password: '',
-    location: '',
-    image: '',
-    bio: '',
-  } as User);
+  const [newUser, setNewUser] = useState<Partial<User>>({
+    username: undefined,
+    email: undefined,
+    password: undefined,
+    location: undefined,
+    image: undefined,
+    bio: undefined,
+  });
   const errorBase = {
     generic: { title: '', message: '' },
     fields: {
@@ -58,19 +58,41 @@ export default ({ route, navigation }: Props) => {
   } as FormError;
   const [errors, setErrors] = useState<FormError>(errorBase);
 
-  const register = () => {
-    postUser(newUser).then((response) => {
-      if ((response as FormError).generic !== undefined) {
-        setErrors({
-          ...errors,
-          fields: { ...errors.fields, ...(response as FormError).fields },
-        });
-      } else {
-        // if user is already logged in === update current user
-        setUser(response as User);
-        navigation.navigate('Root');
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...errors.fields };
+    for (var prop in newUser) {
+      if (Object.prototype.hasOwnProperty.call(newUser, prop)) {
+        // @ts-ignore
+        if (newUser[prop] === undefined || newUser[prop] === '') {
+          valid = false;
+          newErrors[prop] = { hasError: true, inlineErrorMessage: `${prop} required` };
+        }
       }
-    });
+    }
+    setErrors({ ...errors, fields: newErrors });
+    if (newUser.image === undefined || newUser.image === '')
+      alert('Please select an image');
+    return valid;
+  };
+
+  const register = () => {
+    console.log(newUser);
+
+    if (validateForm()) {
+      postUser(newUser as User).then((response) => {
+        if ((response as FormError).generic !== undefined) {
+          setErrors({
+            ...errors,
+            fields: { ...errors.fields, ...(response as FormError).fields },
+          });
+        } else {
+          // if user is already logged in === update current user
+          setUser(response as User);
+          navigation.navigate('Root');
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -91,13 +113,12 @@ export default ({ route, navigation }: Props) => {
       <View className="mb-2">
         <AvatarPicker
           aspect={[1, 1]}
-          value={newUser.image == '' ? undefined : newUser.image}
           onChange={(image) => setNewUser({ ...newUser, image })}
         />
       </View>
       <View className="mb-2">
         <Text
-          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+          className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 ${
             errors.fields.username.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >
@@ -114,7 +135,7 @@ export default ({ route, navigation }: Props) => {
       </View>
       <View className="mb-2">
         <Text
-          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+          className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 ${
             errors.fields.email.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >
@@ -131,7 +152,7 @@ export default ({ route, navigation }: Props) => {
       </View>
       <View className="mb-2">
         <Text
-          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+          className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 ${
             errors.fields.password.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >
@@ -149,7 +170,7 @@ export default ({ route, navigation }: Props) => {
       </View>
       <View className="mb-2">
         <Text
-          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+          className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 ${
             errors.fields.location.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >
@@ -166,7 +187,7 @@ export default ({ route, navigation }: Props) => {
       </View>
       <View className="mb-2">
         <Text
-          className={`mb-0.5 font-comfortaa_bold text-slate-600 ${
+          className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 ${
             errors.fields.bio.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >

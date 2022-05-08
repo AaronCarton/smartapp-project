@@ -25,11 +25,7 @@ export default () => {
   }, [age]);
 
   const search = () => {
-    console.log(searchQuery);
-
     searchPet(searchQuery).then((res) => {
-      console.log(res);
-
       if (res.length > 0) {
         bottomNav.navigate('Search', { petList: res });
       } else {

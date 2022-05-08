@@ -83,7 +83,7 @@ function Pet({ route, navigation }: Props) {
         </View>
         <View className="mx-4  mt-auto ">
           <Text className="font-comfortaa_bold text-xl">Location</Text>
-          <Text className="mb-[-8px] text-base text-slate-500">
+          <Text className="mb-[-8px] text-base capitalize text-slate-500">
             <Ionicons name="location" color={'#64748B'} size={15} />
             {pet.location}
           </Text>

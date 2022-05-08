@@ -49,7 +49,17 @@ export default () => {
     },
   } as FormError;
   var stackNav = useNavigation<NavigationProp<RootStackParamList, 'AddModal'>>();
-  const [newPet, setNewPet] = useState<Pet>({} as Pet);
+  const [newPet, setNewPet] = useState<Partial<Pet>>({
+    name: undefined,
+    age: undefined,
+    ageType: undefined,
+    description: undefined,
+    details: undefined,
+    gender: undefined,
+    image: undefined,
+    type: undefined,
+    location: undefined,
+  });
   const [errors, setErrors] = useState<FormError>(errorBase);
   const { user, setUser } = useAuth();
 
@@ -69,19 +79,43 @@ export default () => {
       });
     }
   };
-  const register = () => {
-    postPet(newPet, user!).then((response) => {
-      if ((response as FormError).generic !== undefined) {
-        setErrors({
-          ...errors,
-          fields: { ...errors.fields, ...(response as FormError).fields },
-        });
-      } else {
-        user?.pets.push(response as Pet);
-        setUser({ ...user });
-        stackNav.navigate('Root');
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...errors.fields };
+    for (var prop in newPet) {
+      if (Object.prototype.hasOwnProperty.call(newPet, prop)) {
+        if (
+          // @ts-ignore
+          newPet[prop] === undefined ||
+          // @ts-ignore
+          newPet[prop] === '' ||
+          newPet['details']!.length === 0
+        ) {
+          valid = false;
+          newErrors[prop] = { hasError: true, inlineErrorMessage: `${prop} required` };
+        }
       }
-    });
+    }
+    setErrors({ ...errors, fields: newErrors });
+    if (newPet.image === undefined) alert('Please select an image');
+    return valid;
+  };
+
+  const register = () => {
+    if (validateForm()) {
+      postPet(newPet as Pet, user!).then((response) => {
+        if ((response as FormError).generic !== undefined) {
+          setErrors({
+            ...errors,
+            fields: { ...errors.fields, ...(response as FormError).fields },
+          });
+        } else {
+          user?.pets.push(response as Pet);
+          setUser({ ...user });
+          stackNav.navigate('Root');
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -98,13 +132,15 @@ export default () => {
   return (
     <ScrollView contentContainerStyle={{ paddingTop: 20, paddingBottom: 30 }}>
       <View className="mx-14 h-full justify-center">
-        <AvatarPicker
-          aspect={[4, 3]}
-          onChange={(uri) => setNewPet({ ...newPet, image: uri })}
-        />
+        <View className="mt-2 mb-4">
+          <AvatarPicker
+            aspect={[4, 3]}
+            onChange={(uri) => setNewPet({ ...newPet, image: uri })}
+          />
+        </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.name.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -119,7 +155,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.age.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -133,7 +169,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.gender.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -154,7 +190,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.type.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -176,7 +212,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.location.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -193,7 +229,7 @@ export default () => {
         </View>
         <View className="mb-2">
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.description.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -213,7 +249,7 @@ export default () => {
         </View>
         <View>
           <Text
-            className={`mb-0.5 font-comfortaa_bold text-slate-600 dark:text-slate-200 ${
+            className={`mb-0.5 font-comfortaa_bold capitalize text-slate-600 dark:text-slate-200 ${
               errors.fields.details.hasError ? 'text-red-500 dark:text-red-500' : ''
             } `}
           >
@@ -230,7 +266,7 @@ export default () => {
           <Button
             title="Preview"
             onPress={() =>
-              stackNav.navigate('PetModal', { pet: { ...newPet, seller: user } })
+              stackNav.navigate('PetModal', { pet: { ...(newPet as Pet), seller: user } })
             }
           />
         </View>

@@ -60,7 +60,7 @@ export default () => {
             errors.fields.email.hasError ? 'text-red-500 dark:text-red-500' : ''
           } `}
         >
-          Email {errors.fields.email.hasError && 'incorrect'}
+          Email {errors.fields.email.hasError && 'not found'}
         </Text>
         <TextInput
           className={`rounded-md border-2 border-slate-700 px-3 py-1${
