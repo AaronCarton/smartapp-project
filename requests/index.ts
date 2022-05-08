@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../hooks/Auth';
 import { FormError, Pet, User, ApiError, SearchQuery } from '../types';
 
-const BASE_URL = `http://192.168.0.120:5035`;
+export const BASE_URL = `http://192.168.0.207:5035`;
 //? 192.168.0.120
 //? 172.30.22.47
 
